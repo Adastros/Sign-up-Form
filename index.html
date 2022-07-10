@@ -1,12 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="./style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./style.css" />
     <title>Document</title>
     <script src="./javascript.js" defer></script>
-</head>
-<body>
-    
-</body>
+  </head>
+  <body>
+    <main>
+      <h1>
+        This is not a real online service! Don't input any sensitive
+        information such as passwords or phone numbers into the form.
+      </h1>
+      <h2>Create your Account</h2>
+      <form action="" method="post">
+        <section>
+          <label for="first-name">First Name:</label>
+          <input type="text" id="first-name" name="firstName" required />
+          <label for="last-name">Last Name:</label>
+          <input type="text" id="last-name" name="lastName" required />
+          <label for="email">E-mail:</label>
+          <input type="email" id="email" name="email" required />
+          <label for="phone-number">Phone Number <i>(optional)</i></label>
+          <input type="tel" id="phone-number" name="phoneNumber" pattern="" />
+        </section>
+        <section>
+          <label for="user-password">Password:</label>
+          <input type="password" id="user-password" name="userPassword" />
+          <label for="confirm-password">Confirm Password:</label>
+          <input
+            type="password"
+            id="confirm-password"
+            name="confirm-password"
+          />
+        </section>
+        <section>
+          <label for="receive-notifications"
+            >I would like to receive marketing and notifications by email and text.
+          </label>
+          <input
+            type="checkbox"
+            id="receive-notifications"
+            name="receive-notifications"
+          />
+        </section>
+        <p>
+          By selecting Create Account, you agree to our
+          <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+        </p>
+        <button type="submit">Create Account</button>
+        <p>Already have an account? <a href="#">Sign In</a></p>
+      </form>
+    </main>
+  </body>
 </html>
