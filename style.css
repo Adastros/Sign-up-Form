@@ -23,9 +23,12 @@ main {
   gap: 1rem;
 }
 
-form {
+form, .form-field {
   display: flex;
   flex-direction: column;
+}
+
+form {
   gap: 0.5rem;
 }
 
