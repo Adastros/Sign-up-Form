@@ -22,18 +22,21 @@ firstName.addEventListener("input", (e) => {
 form.addEventListener("submit", (e) => {
   // No need to check submit button and checkbox for errors
   for (let i = 0; i < formFields.length - 2; i++) {
-    if (!formFields[i].validity.valid) {
-      console.log(formFields[i]);
-      checkForError(formFields[i]);
-      e.preventDefault();
+    if (!formFields[i].validity.valid || formFields[i].id === "confirm-user-password") {
+      //console.log(formFields[i]);
+      isThereError = checkForErrorType(formFields[i]);
     } else {
       hideErrorField(formFields[i]);
       unHighlightField(formFields[i]);
     }
   }
+
+  if (document.querySelector(".error")) {
+    e.preventDefault();
+  }
 });
 
-function checkForError(formField) {
+function checkForErrorType(formField) {
   switch (true) {
     case formField.validity.valueMissing:
       getValueMissingErrorMessage(formField);
@@ -50,11 +53,15 @@ function checkForError(formField) {
     case formField.validity.typeMismatch: // applies to email field only
       getTypeMismatchErrorMessage(formField);
       break;
-    default:
-      console.log(
-        "Error: A formField is invalid but none of the form error checks matched the error."
-      );
-      return;
+    case checkPasswordMismatch(formField):
+      getPasswordMismatchErrorMessage(formField);
+      break;
+    default: // Error with code if the fields not including confirm password were invalid but did not match an error type
+      if (formField.id !== "confirm-user-password") {
+        console.log(
+          `Error: None of the error messages in the checkForErrorType function was chosen for form field ${formFieldLabel}.`
+        );
+      }
   }
 
   highlightField(formField);
@@ -64,15 +71,15 @@ function checkForError(formField) {
 // Two separate functions to easily determine if input field border color will be
 // red or black to indicate the input as invalid or valid, respectively.
 function highlightField(formField) {
-    if (!formField.classList.contains('error')) {
-        formField.classList.toggle("error");
-    }
+  if (!formField.classList.contains("error")) {
+    formField.classList.toggle("error");
+  }
 }
 
 function unHighlightField(formField) {
-    if (formField.classList.contains('error')) {
-        formField.classList.toggle("error");
-    }
+  if (formField.classList.contains("error")) {
+    formField.classList.toggle("error");
+  }
 }
 
 // Two separate functions to easily determine if error field will be hidden or shown
@@ -95,13 +102,23 @@ function hideErrorField(formField) {
   }
 }
 
+function checkPasswordMismatch(formField) {
+  if (formField.id === "confirm-user-password") {
+    if (userPassword.value !== confirmUserPassword.value) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 function getValueMissingErrorMessage(formField) {
   let formFieldLabel = formField.previousElementSibling.textContent
       .slice(0, -1)
       .toLowerCase(),
     formFieldErrorMessageNode = formField.nextElementSibling.lastElementChild,
     message = "Please enter ";
-  console.log(formFieldErrorMessageNode);
+  //console.log(formFieldErrorMessageNode);
 
   switch (formField.id) {
     case "first-name":
@@ -114,6 +131,9 @@ function getValueMissingErrorMessage(formField) {
       break;
     case "email":
       message += `an ${formFieldLabel} address.`;
+      break;
+    case "confirm-user-password":
+      message = "Please confirm your password.";
       break;
     default:
       console.log(
@@ -131,7 +151,7 @@ function getTooLongErrorMessage(formField) {
       .toLowerCase(),
     formFieldErrorMessageNode = formField.nextElementSibling.lastElementChild,
     message = `Your ${formFieldLabel} `;
-  console.log(formFieldErrorMessageNode);
+  //console.log(formFieldErrorMessageNode);
 
   switch (formField.id) {
     case "first-name":
@@ -163,7 +183,7 @@ function getTooShortErrorMessage(formField) {
       .toLowerCase(),
     formFieldErrorMessageNode = formField.nextElementSibling.lastElementChild,
     message = `Your ${formFieldLabel} `;
-  console.log(formFieldErrorMessageNode);
+  //console.log(formFieldErrorMessageNode);
 
   switch (formField.id) {
     case "user-name":
@@ -188,7 +208,7 @@ function getPatternMismatchErrorMessage(formField) {
       .toLowerCase(),
     formFieldErrorMessageNode = formField.nextElementSibling.lastElementChild,
     message = "";
-  console.log(formFieldErrorMessageNode);
+  //console.log(formFieldErrorMessageNode);
 
   switch (formField.id) {
     case "first-name":
@@ -220,4 +240,12 @@ function getTypeMismatchErrorMessage(formField) {
     message = `Please enter a valid email address. Example: sample@gmail.com`;
 
   formFieldErrorMessageNode.textContent = message;
+}
+
+function getPasswordMismatchErrorMessage(formField) {
+  //console.log("getPasswordMismatchErrorMessage");
+  let passwordErrorMessageNode = formField.nextElementSibling.lastElementChild,
+    message = `The passwords don't match.`;
+
+  passwordErrorMessageNode.textContent = message;
 }
