@@ -23,7 +23,8 @@ main {
   gap: 1rem;
 }
 
-form, .form-field {
+form,
+.form-field {
   display: flex;
   flex-direction: column;
 }
@@ -41,11 +42,23 @@ button {
   align-self: center;
 }
 
-input[type="checkbox"] {
+form input {
+  border-color: black;
+}
+
+form input[type="checkbox"] {
   align-self: center;
 }
 
-input:invalid:required {
+form input:not(:focus):invalid {
+  border-color: black;
+}
+
+form input:focus:invalid {
+  border-color: black;
+}
+
+form input.error:invalid {
   border-color: red;
 }
 

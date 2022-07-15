@@ -10,36 +10,30 @@ const form = document.querySelector("form"),
   firstNameErrorField = document.querySelector(".error-first-name"),
   firstNameErrorMsg = document.querySelector(".error-msg-first-name");
 
+/*
 firstName.addEventListener("input", (e) => {
   if (firstName.validity.valid) {
     firstNameErrorMsg.textContent = "";
     console.log("hello");
   }
 });
+*/
 
 form.addEventListener("submit", (e) => {
-  /*
-    if (!firstName.validity.valid) {
-    console.log("hello2");
-    getError();
-    e.preventDefault();
-  }
-  */
-  //console.log(formFields);
-
   // No need to check submit button and checkbox for errors
   for (let i = 0; i < formFields.length - 2; i++) {
     if (!formFields[i].validity.valid) {
       console.log(formFields[i]);
-      checkForErrors(formFields[i]);
+      checkForError(formFields[i]);
       e.preventDefault();
     } else {
       hideErrorField(formFields[i]);
+      unHighlightField(formFields[i]);
     }
   }
 });
 
-function checkForErrors(formField) {
+function checkForError(formField) {
   switch (true) {
     case formField.validity.valueMissing:
       getValueMissingErrorMessage(formField);
@@ -63,10 +57,25 @@ function checkForErrors(formField) {
       return;
   }
 
+  highlightField(formField);
   showErrorField(formField);
 }
 
-// Two separate functions to easily determine if error field will be hidden or shown 
+// Two separate functions to easily determine if input field border color will be
+// red or black to indicate the input as invalid or valid, respectively.
+function highlightField(formField) {
+    if (!formField.classList.contains('error')) {
+        formField.classList.toggle("error");
+    }
+}
+
+function unHighlightField(formField) {
+    if (formField.classList.contains('error')) {
+        formField.classList.toggle("error");
+    }
+}
+
+// Two separate functions to easily determine if error field will be hidden or shown
 // at certain points rather than one combine into one larger function to toggle error
 // fields.
 function showErrorField(formField) {
@@ -82,6 +91,7 @@ function hideErrorField(formField) {
 
   if (!errorField.classList.contains("hide")) {
     errorField.classList.toggle("hide");
+    errorField.lastElementChild.textContent = "";
   }
 }
 
