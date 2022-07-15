@@ -23,7 +23,6 @@ form.addEventListener("submit", (e) => {
   // No need to check submit button and checkbox for errors
   for (let i = 0; i < formFields.length - 2; i++) {
     if (!formFields[i].validity.valid || formFields[i].id === "confirm-user-password") {
-      //console.log(formFields[i]);
       isThereError = checkForErrorType(formFields[i]);
     } else {
       hideErrorField(formFields[i]);
@@ -118,7 +117,6 @@ function getValueMissingErrorMessage(formField) {
       .toLowerCase(),
     formFieldErrorMessageNode = formField.nextElementSibling.lastElementChild,
     message = "Please enter ";
-  //console.log(formFieldErrorMessageNode);
 
   switch (formField.id) {
     case "first-name":
@@ -151,7 +149,6 @@ function getTooLongErrorMessage(formField) {
       .toLowerCase(),
     formFieldErrorMessageNode = formField.nextElementSibling.lastElementChild,
     message = `Your ${formFieldLabel} `;
-  //console.log(formFieldErrorMessageNode);
 
   switch (formField.id) {
     case "first-name":
@@ -169,7 +166,7 @@ function getTooLongErrorMessage(formField) {
       break;
     default:
       console.log(
-        `Error: None of the error messages in the getTooShortErrorMessage 
+        `Error: None of the error messages in the getTooLongErrorMessage 
         function was chosen for form field ${formFieldLabel}.`
       );
       return;
@@ -183,7 +180,6 @@ function getTooShortErrorMessage(formField) {
       .toLowerCase(),
     formFieldErrorMessageNode = formField.nextElementSibling.lastElementChild,
     message = `Your ${formFieldLabel} `;
-  //console.log(formFieldErrorMessageNode);
 
   switch (formField.id) {
     case "user-name":
@@ -208,7 +204,6 @@ function getPatternMismatchErrorMessage(formField) {
       .toLowerCase(),
     formFieldErrorMessageNode = formField.nextElementSibling.lastElementChild,
     message = "";
-  //console.log(formFieldErrorMessageNode);
 
   switch (formField.id) {
     case "first-name":
@@ -243,7 +238,6 @@ function getTypeMismatchErrorMessage(formField) {
 }
 
 function getPasswordMismatchErrorMessage(formField) {
-  //console.log("getPasswordMismatchErrorMessage");
   let passwordErrorMessageNode = formField.nextElementSibling.lastElementChild,
     message = `The passwords don't match.`;
 
