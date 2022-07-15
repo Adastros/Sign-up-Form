@@ -15,28 +15,101 @@
   <body>
     <main>
       <div class="create-account-container">
-        <form action="" method="post">
+        <form action="" method="post" novalidate>
           <h1 class="company-name">Ink Gallery</h1>
           <h2>Create your Account</h2>
           <div class="form-field">
             <label for="first-name">First Name:</label>
-            <input type="text" id="first-name" name="firstName" required />
+            <input
+              type="text"
+              id="first-name"
+              class="user-input"
+              name="firstName"
+              maxlength="100"
+              pattern="[A-Za-z]+"
+              required
+            />
+            <div class="error-first-name hide">
+              <img
+                class="error-img"
+                src="./images/warning_FILL0_wght400_GRAD0_opsz48.svg"
+                alt=""
+              /><span class="error-msg-first-name"></span>
+            </div>
           </div>
           <div class="form-field">
             <label for="last-name">Last Name:</label>
-            <input type="text" id="last-name" name="lastName" required />
+            <input
+              type="text"
+              id="last-name"
+              class="user-input"
+              name="lastName"
+              maxlength="100"
+              pattern="[A-Za-z]+"
+              required
+            />
+            <div class="error-first-name hide">
+              <img
+                class="error-img"
+                src="./images/warning_FILL0_wght400_GRAD0_opsz48.svg"
+                alt=""
+              /><span class="error-msg-first-name"></span>
+            </div>
           </div>
           <div class="form-field">
             <label for="user-name">User Name:</label>
-            <input type="text" id="user-name" name="userName" required />
+            <input
+              type="text"
+              id="user-name"
+              class="user-input"
+              name="userName"
+              minlength="6"
+              maxlength="30"
+              pattern="[A-Za-z0-9 ]+"
+              required
+            />
+            <div class="error-first-name hide">
+              <img
+                class="error-img"
+                src="./images/warning_FILL0_wght400_GRAD0_opsz48.svg"
+                alt=""
+              /><span class="error-msg-first-name"></span>
+            </div>
           </div>
           <div class="form-field">
             <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" required />
+            <input
+              type="email"
+              id="email"
+              class="user-input"
+              name="email"
+              maxlength="24"
+              required
+            />
+            <div class="error-first-name hide">
+              <img
+                class="error-img"
+                src="./images/warning_FILL0_wght400_GRAD0_opsz48.svg"
+                alt=""
+              /><span class="error-msg-first-name"></span>
+            </div>
           </div>
           <div class="form-field">
-            <label for="phone-number">Phone Number <i>(optional)</i>:</label>
-            <input type="tel" id="phone-number" name="phoneNumber" />
+            <label for="phone-number">Phone Number: <i>(optional)</i></label>
+            <input
+              type="tel"
+              id="phone-number"
+              class="user-input"
+              name="phoneNumber"
+              pattern="^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
+            />
+            <div class="error-first-name hide">
+              <img
+                class="error-img"
+                src="./images/warning_FILL0_wght400_GRAD0_opsz48.svg"
+                alt=""
+              /><span class="error-msg-first-name"></span>
+            </div>
           </div>
           <div class="form-field">
             <label for="user-password">Password:</label>
@@ -44,22 +117,41 @@
               type="password"
               id="user-password"
               name="userPassword"
+              minlength="8"
+              maxlength="48"
+              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,48}$"
               required
             />
+            <div class="error-first-name hide">
+              <img
+                class="error-img"
+                src="./images/warning_FILL0_wght400_GRAD0_opsz48.svg"
+                alt=""
+              /><span class="error-msg-first-name"></span>
+            </div>
           </div>
           <div class="form-field">
             <label for="confirm-user-password">Confirm Password:</label>
             <input
               type="password"
               id="confirm-user-password"
+              class="user-input"
               name="confirm-user-password"
               required
             />
+            <div class="error-first-name hide">
+              <img
+                class="error-img"
+                src="./images/warning_FILL0_wght400_GRAD0_opsz48.svg"
+                alt=""
+              /><span class="error-msg-first-name"></span>
+            </div>
           </div>
           <div class="receive-promotions">
             <input
               type="checkbox"
               id="receive-promotions"
+              class="user-input"
               name="receive-promotions"
             />
             <label for="receive-promotions"
@@ -82,7 +174,11 @@
         </form>
       </div>
       <div class="create-account-image">
-        <img src="./images/christmas_bighero6_edit.png" alt="" />
+        <img
+          class="form-img"
+          src="./images/christmas_bighero6_edit.png"
+          alt=""
+        />
       </div>
     </main>
   </body>
