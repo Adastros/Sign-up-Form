@@ -10,60 +10,7 @@ const form = document.querySelector("form"),
   firstNameErrorField = document.querySelector(".error-first-name"),
   firstNameErrorMsg = document.querySelector(".error-msg-first-name");
 
-// firstName.addEventListener("input", (e) => {
-//   if (!firstName.validity.valid) {
-//     checkForErrorType(firstName);
-//   } else {
-//     hideErrorField(firstName);
-//     unHighlightField(firstName);
-//   }
-// });
-
-// lastName.addEventListener("input", (e) => {
-//   if (!firstName.validity.valid) {
-//     checkForErrorType(lastName);
-//   } else {
-//     hideErrorField(lastName);
-//     unHighlightField(lastName);
-//   }
-// });
-
-// userName.addEventListener("input", (e) => {
-//   if (!firstName.validity.valid) {
-//     checkForErrorType(userName);
-//   } else {
-//     hideErrorField(userName);
-//     unHighlightField(userName);
-//   }
-// });
-
-// email.addEventListener("input", (e) => {
-//   if (!firstName.validity.valid) {
-//     checkForErrorType(email);
-//   } else {
-//     hideErrorField(email);
-//     unHighlightField(email);
-//   }
-// });
-
-// phoneNumber.addEventListener("input", (e) => {
-//   if (!firstName.validity.valid) {
-//     checkForErrorType(phoneNumber);
-//   } else {
-//     hideErrorField(phoneNumber);
-//     unHighlightField(phoneNumber);
-//   }
-// });
-
-// userPassword.addEventListener("input", (e) => {
-//   if (!firstName.validity.valid) {
-//     checkForErrorType(userPassword);
-//   } else {
-//     hideErrorField(userPassword);
-//     unHighlightField(userPassword);
-//   }
-// });
-
+// Lazy form validation
 form.addEventListener("focusout", (e) => {
   if (!e.target.validity.valid || e.target.id === "confirm-user-password") {
     checkForErrorType(e.target);
