@@ -1,7 +1,7 @@
 const form = document.querySelector("form"),
   formFields = form.elements,
   firstName = document.getElementById("first-name"),
-  LastName = document.getElementById("last-name"),
+  lastName = document.getElementById("last-name"),
   userName = document.getElementById("user-name"),
   email = document.getElementById("email"),
   phoneNumber = document.getElementById("phone-number"),
@@ -10,19 +10,77 @@ const form = document.querySelector("form"),
   firstNameErrorField = document.querySelector(".error-first-name"),
   firstNameErrorMsg = document.querySelector(".error-msg-first-name");
 
-/*
-firstName.addEventListener("input", (e) => {
-  if (firstName.validity.valid) {
-    firstNameErrorMsg.textContent = "";
-    console.log("hello");
+// firstName.addEventListener("input", (e) => {
+//   if (!firstName.validity.valid) {
+//     checkForErrorType(firstName);
+//   } else {
+//     hideErrorField(firstName);
+//     unHighlightField(firstName);
+//   }
+// });
+
+// lastName.addEventListener("input", (e) => {
+//   if (!firstName.validity.valid) {
+//     checkForErrorType(lastName);
+//   } else {
+//     hideErrorField(lastName);
+//     unHighlightField(lastName);
+//   }
+// });
+
+// userName.addEventListener("input", (e) => {
+//   if (!firstName.validity.valid) {
+//     checkForErrorType(userName);
+//   } else {
+//     hideErrorField(userName);
+//     unHighlightField(userName);
+//   }
+// });
+
+// email.addEventListener("input", (e) => {
+//   if (!firstName.validity.valid) {
+//     checkForErrorType(email);
+//   } else {
+//     hideErrorField(email);
+//     unHighlightField(email);
+//   }
+// });
+
+// phoneNumber.addEventListener("input", (e) => {
+//   if (!firstName.validity.valid) {
+//     checkForErrorType(phoneNumber);
+//   } else {
+//     hideErrorField(phoneNumber);
+//     unHighlightField(phoneNumber);
+//   }
+// });
+
+// userPassword.addEventListener("input", (e) => {
+//   if (!firstName.validity.valid) {
+//     checkForErrorType(userPassword);
+//   } else {
+//     hideErrorField(userPassword);
+//     unHighlightField(userPassword);
+//   }
+// });
+
+form.addEventListener("focusout", (e) => {
+  if (!e.target.validity.valid || e.target.id === "confirm-user-password") {
+    checkForErrorType(e.target);
+  } else {
+    hideErrorField(e.target);
+    unHighlightField(e.target);
   }
 });
-*/
 
+// Double check input prior to sending information to server
 form.addEventListener("submit", (e) => {
   // No need to check submit button and checkbox for errors
   for (let i = 0; i < formFields.length - 2; i++) {
-    if (!formFields[i].validity.valid || formFields[i].id === "confirm-user-password") {
+    if (
+      !formFields[i].validity.valid ||
+      formFields[i].id === "confirm-user-password"
+    ) {
       isThereError = checkForErrorType(formFields[i]);
     } else {
       hideErrorField(formFields[i]);
@@ -60,6 +118,8 @@ function checkForErrorType(formField) {
         console.log(
           `Error: None of the error messages in the checkForErrorType function was chosen for form field ${formFieldLabel}.`
         );
+      } else {
+        return;
       }
   }
 
@@ -103,6 +163,8 @@ function hideErrorField(formField) {
 
 function checkPasswordMismatch(formField) {
   if (formField.id === "confirm-user-password") {
+    console.log(`user: ${userPassword.value}`);
+    console.log(`confirmUserPassword: ${confirmUserPassword.value}`);
     if (userPassword.value !== confirmUserPassword.value) {
       return true;
     }
