@@ -10,13 +10,54 @@ const form = document.querySelector("form"),
   firstNameErrorField = document.querySelector(".error-first-name"),
   firstNameErrorMsg = document.querySelector(".error-msg-first-name");
 
+let formFieldObj = {
+  firstName: {
+    validateAgressive: false,
+  },
+  lastName: {
+    validateAgressive: false,
+  },
+  userName: {
+    validateAgressive: false,
+  },
+  email: {
+    validateAgressive: false,
+  },
+  phoneNumber: {
+    validateAgressive: false,
+  },
+  userPassword: {
+    validateAgressive: false,
+  },
+  confirmUserPassword: {
+    validateAgressive: false,
+  },
+};
+
+// Aggressive form validation
+// Resets when form field is valid
+form.addEventListener('input', (e) => {
+  if (getAgressiveValidation(e.target.name)) {
+    if (!e.target.validity.valid || e.target.id === "confirm-user-password") {
+      checkForErrorType(e.target);
+    } else {
+      hideErrorField(e.target);
+      unHighlightField(e.target);
+      setAgressiveValidation(e.target.name, false);
+    }
+  }
+});
+
 // Lazy form validation
+// Trigger aggressive validation once out of focus
 form.addEventListener("focusout", (e) => {
   if (!e.target.validity.valid || e.target.id === "confirm-user-password") {
     checkForErrorType(e.target);
+    setAgressiveValidation(e.target.name, true);
   } else {
     hideErrorField(e.target);
     unHighlightField(e.target);
+    setAgressiveValidation(e.target.name, false);
   }
 });
 
@@ -39,6 +80,14 @@ form.addEventListener("submit", (e) => {
     e.preventDefault();
   }
 });
+
+function setAgressiveValidation (formField, bool) {
+  formFieldObj[formField].validateAgressive = bool;
+}
+
+function getAgressiveValidation (formField) {
+  return formFieldObj[formField].validateAgressive;
+}
 
 function checkForErrorType(formField) {
   switch (true) {
@@ -110,8 +159,6 @@ function hideErrorField(formField) {
 
 function checkPasswordMismatch(formField) {
   if (formField.id === "confirm-user-password") {
-    console.log(`user: ${userPassword.value}`);
-    console.log(`confirmUserPassword: ${confirmUserPassword.value}`);
     if (userPassword.value !== confirmUserPassword.value) {
       return true;
     }
