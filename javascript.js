@@ -116,9 +116,7 @@ for (let i = 0; i < formFields.length - 2; i++) {
         checkForErrorType(e.target);
         setAgressiveValidation(e.target.name, true);
       } else {
-        if (e.target.name === "phoneNumber" && e.target.value !== "") {
-          showCheckmark(e.target);
-        }
+        showCheckmark(e.target);
         hideErrorField(e.target);
         unHighlightField(e.target);
         setAgressiveValidation(e.target.name, false);
