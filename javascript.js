@@ -35,20 +35,44 @@ let formFieldObj = {
 };
 
 // Aggressive form validation
-// Resets when form field is valid
+// Resets/ disabled when form field is valid
 // No need to validate submit button and checkbox for errors
 for (let i = 0; i < formFields.length - 2; i++) {
-  formFields[i].addEventListener("input", (e) => {
-    if (getAgressiveValidation(e.target.name)) {
-      if (!e.target.validity.valid || e.target.id === "confirm-user-password") {
-        checkForErrorType(e.target);
-      } else {
-        hideErrorField(e.target);
-        unHighlightField(e.target);
-        setAgressiveValidation(e.target.name, false);
+  if (formFields[i].id === "user-password") {
+    formFields[i].addEventListener("input", (e) => {
+      if (getAgressiveValidation(e.target.name)) {
+        if (!e.target.validity.valid) {
+          checkForErrorType(e.target);
+        } else {
+          hideErrorField(e.target);
+          unHighlightField(e.target);
+          setAgressiveValidation(e.target.name, false);
+        }
       }
-    }
-  });
+
+      if (confirmUserPassword.value !== "") {
+        checkForErrorType(confirmUserPassword);
+      }
+    });
+  } else if (formFields[i].id === "confirm-user-password") {
+    formFields[i].addEventListener("input", (e) => {
+      if (getAgressiveValidation(e.target.name)) {
+        checkForErrorType(e.target);
+      }
+    });
+  } else {
+    formFields[i].addEventListener("input", (e) => {
+      if (getAgressiveValidation(e.target.name)) {
+        if (!e.target.validity.valid) {
+          checkForErrorType(e.target);
+        } else {
+          hideErrorField(e.target);
+          unHighlightField(e.target);
+          setAgressiveValidation(e.target.name, false);
+        }
+      }
+    });
+  }
 }
 
 // Lazy form validation
@@ -65,29 +89,6 @@ for (let i = 0; i < formFields.length - 2; i++) {
     }
   });
 }
-
-// form.addEventListener('input', (e) => {
-//   if (getAgressiveValidation(e.target.name)) {
-//     if (!e.target.validity.valid || e.target.id === "confirm-user-password") {
-//       checkForErrorType(e.target);
-//     } else {
-//       hideErrorField(e.target);
-//       unHighlightField(e.target);
-//       setAgressiveValidation(e.target.name, false);
-//     }
-//   }
-// });
-
-// form.addEventListener("focusout", (e) => {
-//   if (!e.target.validity.valid || e.target.id === "confirm-user-password") {
-//     checkForErrorType(e.target);
-//     setAgressiveValidation(e.target.name, true);
-//   } else {
-//     hideErrorField(e.target);
-//     unHighlightField(e.target);
-//     setAgressiveValidation(e.target.name, false);
-//   }
-// });
 
 // Double check input prior to sending information to server
 form.addEventListener("submit", (e) => {
@@ -143,12 +144,13 @@ function checkForErrorType(formField) {
           `Error: None of the error messages in the checkForErrorType function was chosen for form field ${formFieldLabel}.`
         );
       } else {
+        // applies only to confirm password field. Executes when no missmatch found
         hideErrorField(formField);
-        unHighlightField(formField)
+        unHighlightField(formField);
+        setAgressiveValidation(formField.name, false);
       }
-      return;
+      return false;
   }
-
   highlightField(formField);
   showErrorField(formField);
 }
