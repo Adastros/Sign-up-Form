@@ -29,6 +29,10 @@ form,
   flex-direction: column;
 }
 
+.form-field {
+  position: relative;
+}
+
 form {
   gap: 0.5rem;
 }
@@ -110,4 +114,12 @@ h1 {
 
 .hide {
   visibility: hidden;
+}
+
+.checkmark {
+  position: absolute;
+  top: 1.3rem;
+  right: 0.1rem;
+  height: 1rem;
+  width: 1rem;
 }

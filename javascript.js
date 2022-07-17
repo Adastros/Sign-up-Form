@@ -38,7 +38,21 @@ let formFieldObj = {
 // Resets/ disabled when form field is valid
 // No need to validate submit button and checkbox for errors
 for (let i = 0; i < formFields.length - 2; i++) {
-  if (formFields[i].id === "user-password") {
+  if (formFields[i].name === "phoneNumber") {
+    formFields[i].addEventListener("input", (e) => {
+      if (getAgressiveValidation(e.target.name)) {
+        if (!e.target.validity.valid) {
+          checkForErrorType(e.target);
+          setAgressiveValidation(e.target.name, true);
+        } else {
+          showCheckmark(e.target);
+          hideErrorField(e.target);
+          unHighlightField(e.target);
+          setAgressiveValidation(e.target.name, false);
+        }
+      }
+    });
+  } else if (formFields[i].id === "user-password") {
     formFields[i].addEventListener("input", (e) => {
       if (getAgressiveValidation(e.target.name)) {
         if (!e.target.validity.valid) {
@@ -46,10 +60,11 @@ for (let i = 0; i < formFields.length - 2; i++) {
         } else {
           hideErrorField(e.target);
           unHighlightField(e.target);
+          showCheckmark(e.target);
           setAgressiveValidation(e.target.name, false);
         }
       }
-
+      // if user focuses on password field after confirming password correctly, alert the user if the passwords no longer match
       if (confirmUserPassword.value !== "") {
         checkForErrorType(confirmUserPassword);
       }
@@ -68,6 +83,7 @@ for (let i = 0; i < formFields.length - 2; i++) {
         } else {
           hideErrorField(e.target);
           unHighlightField(e.target);
+          showCheckmark(e.target);
           setAgressiveValidation(e.target.name, false);
         }
       }
@@ -78,16 +94,37 @@ for (let i = 0; i < formFields.length - 2; i++) {
 // Lazy form validation
 // Trigger aggressive validation once out of focus
 for (let i = 0; i < formFields.length - 2; i++) {
-  formFields[i].addEventListener("focusout", (e) => {
-    if (!e.target.validity.valid || e.target.id === "confirm-user-password") {
-      checkForErrorType(e.target);
-      setAgressiveValidation(e.target.name, true);
-    } else {
-      hideErrorField(e.target);
-      unHighlightField(e.target);
-      setAgressiveValidation(e.target.name, false);
-    }
-  });
+  if (formFields[i].name === "phoneNumber") {
+    formFields[i].addEventListener("focusout", (e) => {
+      if (!e.target.validity.valid) {
+        checkForErrorType(e.target);
+        setAgressiveValidation(e.target.name, true);
+      } else {
+        if (e.target.value === "") {
+          hideCheckmark(e.target);
+        } else {
+          showCheckmark(e.target);
+        }
+        hideErrorField(e.target);
+        unHighlightField(e.target);
+        setAgressiveValidation(e.target.name, false);
+      }
+    });
+  } else {
+    formFields[i].addEventListener("focusout", (e) => {
+      if (!e.target.validity.valid || e.target.id === "confirm-user-password") {
+        checkForErrorType(e.target);
+        setAgressiveValidation(e.target.name, true);
+      } else {
+        if (e.target.name === "phoneNumber" && e.target.value !== "") {
+          showCheckmark(e.target);
+        }
+        hideErrorField(e.target);
+        unHighlightField(e.target);
+        setAgressiveValidation(e.target.name, false);
+      }
+    });
+  }
 }
 
 // Double check input prior to sending information to server
@@ -98,7 +135,7 @@ form.addEventListener("submit", (e) => {
       !formFields[i].validity.valid ||
       formFields[i].id === "confirm-user-password"
     ) {
-      isThereError = checkForErrorType(formFields[i]);
+      checkForErrorType(formFields[i]);
     } else {
       hideErrorField(formFields[i]);
       unHighlightField(formFields[i]);
@@ -147,10 +184,13 @@ function checkForErrorType(formField) {
         // applies only to confirm password field. Executes when no missmatch found
         hideErrorField(formField);
         unHighlightField(formField);
+        showCheckmark(formField);
         setAgressiveValidation(formField.name, false);
       }
-      return false;
+      return;
   }
+
+  hideCheckmark(formField);
   highlightField(formField);
   showErrorField(formField);
 }
@@ -186,6 +226,25 @@ function hideErrorField(formField) {
   if (!errorField.classList.contains("hide")) {
     errorField.classList.toggle("hide");
     errorField.lastElementChild.textContent = "";
+  }
+}
+
+// Two separate functions to easily determine if checkmark will be hidden or shown
+// at certain points rather than one combine into one larger function to toggle hide
+// class.
+function showCheckmark(formField) {
+  let checkmark = formField.nextElementSibling.nextElementSibling;
+
+  if (checkmark.classList.contains("hide")) {
+    checkmark.classList.toggle("hide");
+  }
+}
+
+function hideCheckmark(formField) {
+  let checkmark = formField.nextElementSibling.nextElementSibling;
+
+  if (!checkmark.classList.contains("hide")) {
+    checkmark.classList.toggle("hide");
   }
 }
 
