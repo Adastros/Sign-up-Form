@@ -1,4 +1,6 @@
 :root {
+  --password-criteria: lightgray;
+
   height: 100%;
   display: flex;
   justify-content: center;
@@ -21,6 +23,20 @@ main {
   display: flex;
   padding: 5rem;
   gap: 1rem;
+}
+
+ul {
+  display: grid;
+  grid-template-columns: 100px 100px;
+  column-gap: 1rem;
+  row-gap: 1rem;
+  margin: 0;
+  padding-left: 1rem;
+  font-size: calc(1rem * 0.75);
+}
+
+li::marker {
+  color: var(--password-criteria);
 }
 
 form,

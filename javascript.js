@@ -6,6 +6,7 @@ const form = document.querySelector("form"),
   email = document.getElementById("email"),
   phoneNumber = document.getElementById("phone-number"),
   userPassword = document.getElementById("user-password"),
+  passwordCriteria = document.getElementsByTagName("li"),
   confirmUserPassword = document.getElementById("confirm-user-password"),
   firstNameErrorField = document.querySelector(".error-first-name"),
   firstNameErrorMsg = document.querySelector(".error-msg-first-name");
@@ -68,6 +69,9 @@ for (let i = 0; i < formFields.length - 2; i++) {
       if (confirmUserPassword.value !== "") {
         checkForErrorType(confirmUserPassword);
       }
+
+      // Will always be aggressively checked to provide visual feedback password meets requirements
+      checkPasswordCriteria();
     });
   } else if (formFields[i].id === "confirm-user-password") {
     formFields[i].addEventListener("input", (e) => {
@@ -191,6 +195,54 @@ function checkForErrorType(formField) {
   hideCheckmark(formField);
   highlightField(formField);
   showErrorField(formField);
+}
+
+function checkPasswordCriteria() {
+  checkMinPasswordLength();
+  checkLowerCase();
+  checkUpperCase();
+  checkNumber();
+  checkSpecialCharacter();
+}
+
+function checkMinPasswordLength() {
+  if (userPassword.value.length > 7) {
+    passwordCriteria[0].style.setProperty("--password-criteria", "green");
+  } else {
+    passwordCriteria[0].style.setProperty("--password-criteria", "lightgray");
+  }
+}
+
+function checkLowerCase() {
+  if (/[a-z]+/.test(userPassword.value)) {
+    passwordCriteria[1].style.setProperty("--password-criteria", "green");
+  } else {
+    passwordCriteria[1].style.setProperty("--password-criteria", "lightgray");
+  }
+}
+
+function checkUpperCase() {
+  if (/[A-Z]+/.test(userPassword.value)) {
+    passwordCriteria[2].style.setProperty("--password-criteria", "green");
+  } else {
+    passwordCriteria[2].style.setProperty("--password-criteria", "lightgray");
+  }
+}
+
+function checkNumber() {
+  if (/[\d]+/.test(userPassword.value)) {
+    passwordCriteria[3].style.setProperty("--password-criteria", "green");
+  } else {
+    passwordCriteria[3].style.setProperty("--password-criteria", "lightgray");
+  }
+}
+
+function checkSpecialCharacter() {
+  if (/[#?!@$%^&*-]+/.test(userPassword.value)) {
+    passwordCriteria[4].style.setProperty("--password-criteria", "green");
+  } else {
+    passwordCriteria[4].style.setProperty("--password-criteria", "lightgray");
+  }
 }
 
 // Two separate functions to easily determine if input field border color will be

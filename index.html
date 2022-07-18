@@ -145,7 +145,7 @@
               name="userPassword"
               minlength="8"
               maxlength="48"
-              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,48}$"
+              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#?!@$%^&*-])[A-Za-z\d#?!@$%^&*-]{8,48}$"
               required
             />
             <div class="error-first-name hide">
@@ -160,6 +160,15 @@
               src="./images/check_FILL0_wght400_GRAD0_opsz48.svg"
               alt=""
             />
+            <div>
+              <ul class="password-constraints">
+                <li>8 characters minimum</li>
+                <li>One lowercase character</li>
+                <li>One uppercase character</li>
+                <li>One number</li>
+                <li>One special character</li>
+              </ul>
+            </div>
           </div>
           <div class="form-field">
             <label for="confirm-user-password">Confirm Password:</label>
