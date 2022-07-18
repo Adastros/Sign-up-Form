@@ -35,71 +35,9 @@ let formFieldObj = {
   },
 };
 
-// Aggressive form validation
-// Resets/ disabled when form field is valid
-// No need to validate submit button and checkbox for errors
-for (let i = 0; i < formFields.length - 2; i++) {
-  if (formFields[i].name === "phoneNumber") {
-    formFields[i].addEventListener("input", (e) => {
-      if (getAgressiveValidation(e.target.name)) {
-        if (!e.target.validity.valid) {
-          checkForErrorType(e.target);
-          setAgressiveValidation(e.target.name, true);
-        } else {
-          showCheckmark(e.target);
-          hideErrorField(e.target);
-          unHighlightField(e.target);
-          setAgressiveValidation(e.target.name, false);
-        }
-      }
-    });
-  } else if (formFields[i].id === "user-password") {
-    formFields[i].addEventListener("input", (e) => {
-      if (getAgressiveValidation(e.target.name)) {
-        if (!e.target.validity.valid) {
-          checkForErrorType(e.target);
-        } else {
-          hideErrorField(e.target);
-          unHighlightField(e.target);
-          showCheckmark(e.target);
-          setAgressiveValidation(e.target.name, false);
-        }
-      }
-      // if user focuses on password field after confirming password correctly, alert the user if the passwords no longer match
-      if (confirmUserPassword.value !== "") {
-        checkForErrorType(confirmUserPassword);
-      }
-
-      // Will always be aggressively checked to provide visual feedback password meets requirements
-      checkPasswordCriteria();
-    });
-  } else if (formFields[i].id === "confirm-user-password") {
-    formFields[i].addEventListener("input", (e) => {
-      if (getAgressiveValidation(e.target.name)) {
-        checkForErrorType(e.target);
-      }
-    });
-  } else {
-    formFields[i].addEventListener("input", (e) => {
-      if (getAgressiveValidation(e.target.name)) {
-        if (!e.target.validity.valid) {
-          checkForErrorType(e.target);
-        } else {
-          hideErrorField(e.target);
-          unHighlightField(e.target);
-          showCheckmark(e.target);
-          setAgressiveValidation(e.target.name, false);
-        }
-      }
-    });
-  }
-}
-
-// Lazy form validation
-// Trigger aggressive validation once out of focus
-for (let i = 0; i < formFields.length - 2; i++) {
-  if (formFields[i].name === "phoneNumber") {
-    formFields[i].addEventListener("focusout", (e) => {
+const lazyValidation = {
+  phoneNumber: (formField) => {
+    formField.addEventListener("focusout", (e) => {
       if (!e.target.validity.valid) {
         checkForErrorType(e.target);
         setAgressiveValidation(e.target.name, true);
@@ -114,9 +52,16 @@ for (let i = 0; i < formFields.length - 2; i++) {
         setAgressiveValidation(e.target.name, false);
       }
     });
-  } else {
-    formFields[i].addEventListener("focusout", (e) => {
-      if (!e.target.validity.valid || e.target.id === "confirm-user-password") {
+  },
+  confirmUserPassword: (formField) => {
+    formField.addEventListener("focusout", (e) => {
+      checkForErrorType(e.target);
+      setAgressiveValidation(e.target.name, true);
+    });
+  },
+  general: (formField) => {
+    formField.addEventListener("focusout", (e) => {
+      if (!e.target.validity.valid) {
         checkForErrorType(e.target);
         setAgressiveValidation(e.target.name, true);
       } else {
@@ -126,6 +71,92 @@ for (let i = 0; i < formFields.length - 2; i++) {
         setAgressiveValidation(e.target.name, false);
       }
     });
+  },
+};
+
+const aggressiveValidation = {
+  phoneNumber: (formField) => {
+    formField.addEventListener("input", (e) => {
+      if (getAgressiveValidation(e.target.name)) {
+        if (!e.target.validity.valid) {
+          checkForErrorType(e.target);
+        } else {
+          showCheckmark(e.target);
+          hideErrorField(e.target);
+          unHighlightField(e.target);
+          setAgressiveValidation(e.target.name, false);
+        }
+      }
+    });
+  },
+  userPassword: (formField) => {
+    formField.addEventListener("input", (e) => {
+      if (getAgressiveValidation(e.target.name)) {
+        if (!e.target.validity.valid) {
+          checkForErrorType(e.target);
+        } else {
+          hideErrorField(e.target);
+          unHighlightField(e.target);
+          showCheckmark(e.target);
+          setAgressiveValidation(e.target.name, false);
+        }
+      }
+      // if user changes first password field after confirming password correctly, alert the user if the passwords no longer match
+      if (confirmUserPassword.value !== "") {
+        checkForErrorType(confirmUserPassword);
+      }
+
+      // Will always be aggressively checked to provide visual feedback password meets requirements
+      checkPasswordCriteria();
+    });
+  },
+  confirmUserPassword: (formField) => {
+    formField.addEventListener("input", (e) => {
+      if (getAgressiveValidation(e.target.name)) {
+        checkForErrorType(e.target);
+      }
+    });
+  },
+  general: (formField) => {
+    formField.addEventListener("input", (e) => {
+      if (getAgressiveValidation(e.target.name)) {
+        if (!e.target.validity.valid) {
+          checkForErrorType(e.target);
+        } else {
+          hideErrorField(e.target);
+          unHighlightField(e.target);
+          showCheckmark(e.target);
+          setAgressiveValidation(e.target.name, false);
+        }
+      }
+    });
+  },
+};
+
+// Aggressive form validation
+// Resets/ disabled when form field is valid
+// No need to validate submit button and checkbox for errors
+for (let i = 0; i < formFields.length - 2; i++) {
+  if (formFields[i].name === "phoneNumber") {
+    aggressiveValidation.phoneNumber(formFields[i]);
+  } else if (formFields[i].name === "userPassword") {
+    aggressiveValidation.userPassword(formFields[i]);
+  } else if (formFields[i].name === "confirmUserPassword") {
+    aggressiveValidation.confirmUserPassword(formFields[i]);
+  } else {
+    aggressiveValidation.general(formFields[i]);
+  }
+}
+
+// Lazy form validation
+// Trigger aggressive validation once out of focus
+for (let i = 0; i < formFields.length - 2; i++) {
+  if (formFields[i].name === "phoneNumber") {
+    lazyValidation.phoneNumber(formFields[i]);
+  } else if (formFields[i].name === "confirmUserPassword") {
+    lazyValidation.confirmUserPassword(formFields[i]);
+  } else {
+    lazyValidation.general(formFields[i]);
   }
 }
 
@@ -148,54 +179,6 @@ form.addEventListener("submit", (e) => {
     e.preventDefault();
   }
 });
-
-function setAgressiveValidation(formField, bool) {
-  formFieldObj[formField].validateAgressive = bool;
-}
-
-function getAgressiveValidation(formField) {
-  return formFieldObj[formField].validateAgressive;
-}
-
-function checkForErrorType(formField) {
-  switch (true) {
-    case formField.validity.valueMissing:
-      getValueMissingErrorMessage(formField);
-      break;
-    case formField.validity.tooLong:
-      getTooLongErrorMessage(formField);
-      break;
-    case formField.validity.tooShort:
-      getTooShortErrorMessage(formField);
-      break;
-    case formField.validity.patternMismatch:
-      getPatternMismatchErrorMessage(formField);
-      break;
-    case formField.validity.typeMismatch: // applies to email field only
-      getTypeMismatchErrorMessage(formField);
-      break;
-    case checkPasswordMismatch(formField):
-      getPasswordMismatchErrorMessage(formField);
-      break;
-    default: // Error with code if the fields not including confirm password were invalid but did not match an error type
-      if (formField.id !== "confirm-user-password") {
-        console.log(
-          `Error: None of the error messages in the checkForErrorType function was chosen for form field ${formFieldLabel}.`
-        );
-      } else {
-        // applies only to confirm password field. Executes when no missmatch found
-        hideErrorField(formField);
-        unHighlightField(formField);
-        showCheckmark(formField);
-        setAgressiveValidation(formField.name, false);
-      }
-      return;
-  }
-
-  hideCheckmark(formField);
-  highlightField(formField);
-  showErrorField(formField);
-}
 
 function checkPasswordCriteria() {
   checkMinPasswordLength();
@@ -243,6 +226,14 @@ function checkSpecialCharacter() {
   } else {
     passwordCriteria[4].style.setProperty("--password-criteria", "lightgray");
   }
+}
+
+function setAgressiveValidation(formField, bool) {
+  formFieldObj[formField].validateAgressive = bool;
+}
+
+function getAgressiveValidation(formField) {
+  return formFieldObj[formField].validateAgressive;
 }
 
 // Two separate functions to easily determine if input field border color will be
@@ -298,14 +289,44 @@ function hideCheckmark(formField) {
   }
 }
 
-function checkPasswordMismatch(formField) {
-  if (formField.id === "confirm-user-password") {
-    if (userPassword.value !== confirmUserPassword.value) {
-      return true;
-    }
+function checkForErrorType(formField) {
+  switch (true) {
+    case formField.validity.valueMissing:
+      getValueMissingErrorMessage(formField);
+      break;
+    case formField.validity.tooLong:
+      getTooLongErrorMessage(formField);
+      break;
+    case formField.validity.tooShort:
+      getTooShortErrorMessage(formField);
+      break;
+    case formField.validity.patternMismatch:
+      getPatternMismatchErrorMessage(formField);
+      break;
+    case formField.validity.typeMismatch: // applies to email field only
+      getTypeMismatchErrorMessage(formField);
+      break;
+    case checkPasswordMismatch(formField):
+      getPasswordMismatchErrorMessage(formField);
+      break;
+    default: // Error with code if the fields not including confirm password were invalid but did not match an error type
+      if (formField.id !== "confirm-user-password") {
+        console.log(
+          `Error: None of the error messages in the checkForErrorType function was chosen for form field ${formFieldLabel}.`
+        );
+      } else {
+        // applies only to confirm password field. Executes when no missmatch found
+        hideErrorField(formField);
+        unHighlightField(formField);
+        showCheckmark(formField);
+        setAgressiveValidation(formField.name, false);
+      }
+      return;
   }
 
-  return false;
+  hideCheckmark(formField);
+  highlightField(formField);
+  showErrorField(formField);
 }
 
 function getValueMissingErrorMessage(formField) {
@@ -432,6 +453,16 @@ function getTypeMismatchErrorMessage(formField) {
     message = `Please enter a valid email address. Example: sample@gmail.com`;
 
   formFieldErrorMessageNode.textContent = message;
+}
+
+function checkPasswordMismatch(formField) {
+  if (formField.id === "confirm-user-password") {
+    if (userPassword.value !== confirmUserPassword.value) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 function getPasswordMismatchErrorMessage(formField) {
