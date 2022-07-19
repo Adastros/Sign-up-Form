@@ -11,27 +11,58 @@ const form = document.querySelector("form"),
   firstNameErrorField = document.querySelector(".error-first-name"),
   firstNameErrorMsg = document.querySelector(".error-msg-first-name");
 
-let formFieldObj = {
+const formFieldObj = {
   firstName: {
-    validateAgressive: false,
+    validateAggressive: false,
+    valueMissingErrorMessage: "Please enter your first name.",
+    tooLongErrorMessage:
+      "You have a really long first name! Please contact customer support for help.",
+    patternMismatchErrorMessage:
+      "Please enter a valid first name using the English alphabet.",
   },
   lastName: {
-    validateAgressive: false,
+    validateAggressive: false,
+    valueMissingErrorMessage: "Please enter your last name.",
+    tooLongErrorMessage:
+      "You have a really long first name! Please contact customer support for help.",
+    patternMismatchErrorMessage:
+      "Please enter a valid last name using the English alphabet.",
   },
   userName: {
-    validateAgressive: false,
+    validateAggressive: false,
+    valueMissingErrorMessage: "Please enter a username.",
+    tooLongErrorMessage: "Your username must be under 30 characters.",
+    tooShortErrorMessage: "Your username must be at least 6 characters long.",
+    patternMismatchErrorMessage:
+      "Usernames can only contain alphanumeric and space characters.",
   },
   email: {
-    validateAgressive: false,
+    validateAggressive: false,
+    valueMissingErrorMessage: "Please enter an email.",
+    tooLongErrorMessage:
+      "Please enter an email address under 255 characters long.",
+    patternMismatchErrorMessage:
+      "Please enter a valid email address. Example: sample@gmail.com",
+    typeMismatchErrorMessage:
+      "Please enter a valid email address. Example: sample@gmail.com",
   },
   phoneNumber: {
-    validateAgressive: false,
+    validateAggressive: false,
+    patternMismatchErrorMessage:
+      "Please enter a valid 10 digit US phone number.",
   },
   userPassword: {
-    validateAgressive: false,
+    validateAggressive: false,
+    valueMissingErrorMessage: "Please enter a valid password.",
+    tooLongErrorMessage: "Your password must be under 48 characters",
+    tooShortErrorMessage: "Your password must be at least 8 characters long.",
+    patternMismatchErrorMessage:
+      "Your password must between 8 - 48 characters long, contain 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.",
   },
   confirmUserPassword: {
-    validateAgressive: false,
+    validateAggressive: false,
+    valueMissingErrorMessage: "Please confirm your password.",
+    passwordMismatchErrorMessage: "The passwords don't match.",
   },
 };
 
@@ -40,7 +71,7 @@ const lazyValidation = {
     formField.addEventListener("focusout", (e) => {
       if (!e.target.validity.valid) {
         checkForErrorType(e.target);
-        setAgressiveValidation(e.target.name, true);
+        setAggressiveValidation(e.target.name, true);
       } else {
         if (e.target.value === "") {
           hideCheckmark(e.target);
@@ -49,26 +80,26 @@ const lazyValidation = {
         }
         hideErrorField(e.target);
         unHighlightField(e.target);
-        setAgressiveValidation(e.target.name, false);
+        setAggressiveValidation(e.target.name, false);
       }
     });
   },
   confirmUserPassword: (formField) => {
     formField.addEventListener("focusout", (e) => {
       checkForErrorType(e.target);
-      setAgressiveValidation(e.target.name, true);
+      setAggressiveValidation(e.target.name, true);
     });
   },
   general: (formField) => {
     formField.addEventListener("focusout", (e) => {
       if (!e.target.validity.valid) {
         checkForErrorType(e.target);
-        setAgressiveValidation(e.target.name, true);
+        setAggressiveValidation(e.target.name, true);
       } else {
         showCheckmark(e.target);
         hideErrorField(e.target);
         unHighlightField(e.target);
-        setAgressiveValidation(e.target.name, false);
+        setAggressiveValidation(e.target.name, false);
       }
     });
   },
@@ -77,28 +108,28 @@ const lazyValidation = {
 const aggressiveValidation = {
   phoneNumber: (formField) => {
     formField.addEventListener("input", (e) => {
-      if (getAgressiveValidation(e.target.name)) {
+      if (getAggressiveValidation(e.target.name)) {
         if (!e.target.validity.valid) {
           checkForErrorType(e.target);
         } else {
           showCheckmark(e.target);
           hideErrorField(e.target);
           unHighlightField(e.target);
-          setAgressiveValidation(e.target.name, false);
+          setAggressiveValidation(e.target.name, false);
         }
       }
     });
   },
   userPassword: (formField) => {
     formField.addEventListener("input", (e) => {
-      if (getAgressiveValidation(e.target.name)) {
+      if (getAggressiveValidation(e.target.name)) {
         if (!e.target.validity.valid) {
           checkForErrorType(e.target);
         } else {
           hideErrorField(e.target);
           unHighlightField(e.target);
           showCheckmark(e.target);
-          setAgressiveValidation(e.target.name, false);
+          setAggressiveValidation(e.target.name, false);
         }
       }
       // if user changes first password field after confirming password correctly, alert the user if the passwords no longer match
@@ -112,21 +143,21 @@ const aggressiveValidation = {
   },
   confirmUserPassword: (formField) => {
     formField.addEventListener("input", (e) => {
-      if (getAgressiveValidation(e.target.name)) {
+      if (getAggressiveValidation(e.target.name)) {
         checkForErrorType(e.target);
       }
     });
   },
   general: (formField) => {
     formField.addEventListener("input", (e) => {
-      if (getAgressiveValidation(e.target.name)) {
+      if (getAggressiveValidation(e.target.name)) {
         if (!e.target.validity.valid) {
           checkForErrorType(e.target);
         } else {
           hideErrorField(e.target);
           unHighlightField(e.target);
           showCheckmark(e.target);
-          setAgressiveValidation(e.target.name, false);
+          setAggressiveValidation(e.target.name, false);
         }
       }
     });
@@ -228,12 +259,12 @@ function checkSpecialCharacter() {
   }
 }
 
-function setAgressiveValidation(formField, bool) {
-  formFieldObj[formField].validateAgressive = bool;
+function setAggressiveValidation(formField, bool) {
+  formFieldObj[formField].validateAggressive = bool;
 }
 
-function getAgressiveValidation(formField) {
-  return formFieldObj[formField].validateAgressive;
+function getAggressiveValidation(formField) {
+  return formFieldObj[formField].validateAggressive;
 }
 
 // Two separate functions to easily determine if input field border color will be
@@ -292,22 +323,22 @@ function hideCheckmark(formField) {
 function checkForErrorType(formField) {
   switch (true) {
     case formField.validity.valueMissing:
-      getValueMissingErrorMessage(formField);
+      displayErrorMessage(formField, "valueMissingErrorMessage");
       break;
     case formField.validity.tooLong:
-      getTooLongErrorMessage(formField);
+      displayErrorMessage(formField, "tooLongErrorMessage");
       break;
     case formField.validity.tooShort:
-      getTooShortErrorMessage(formField);
+      displayErrorMessage(formField, "tooShortErrorMessage");
       break;
     case formField.validity.patternMismatch:
-      getPatternMismatchErrorMessage(formField);
+      displayErrorMessage(formField, "patternMismatchErrorMessage");
       break;
     case formField.validity.typeMismatch: // applies to email field only
-      getTypeMismatchErrorMessage(formField);
+      displayErrorMessage(formField, "typeMismatchErrorMessage");
       break;
     case checkPasswordMismatch(formField):
-      getPasswordMismatchErrorMessage(formField);
+      displayErrorMessage(formField, "passwordMismatchErrorMessage");
       break;
     default: // Error with code if the fields not including confirm password were invalid but did not match an error type
       if (formField.id !== "confirm-user-password") {
@@ -315,11 +346,11 @@ function checkForErrorType(formField) {
           `Error: None of the error messages in the checkForErrorType function was chosen for form field ${formFieldLabel}.`
         );
       } else {
-        // applies only to confirm password field. Executes when no missmatch found
+        // applies only to confirm password field. Executes when no mismatch found
         hideErrorField(formField);
         unHighlightField(formField);
         showCheckmark(formField);
-        setAgressiveValidation(formField.name, false);
+        setAggressiveValidation(formField.name, false);
       }
       return;
   }
@@ -329,130 +360,88 @@ function checkForErrorType(formField) {
   showErrorField(formField);
 }
 
-function getValueMissingErrorMessage(formField) {
-  let formFieldLabel = formField.previousElementSibling.textContent
-      .slice(0, -1)
-      .toLowerCase(),
-    formFieldErrorMessageNode = formField.nextElementSibling.lastElementChild,
-    message = "Please enter ";
+function displayErrorMessage(formField, messageType) {
+  let formFieldErrorMessage = formField.nextElementSibling.lastElementChild,
+    errorMessage = formFieldObj[formField.name][messageType];
 
-  switch (formField.id) {
-    case "first-name":
-    case "last-name":
-      message += `your ${formFieldLabel}.`;
-      break;
-    case "user-name":
-    case "user-password":
-      message += `a ${formFieldLabel}.`;
-      break;
-    case "email":
-      message += `an ${formFieldLabel} address.`;
-      break;
-    case "confirm-user-password":
-      message = "Please confirm your password.";
-      break;
-    default:
-      console.log(
-        `Error: None of the error messages in the getValueMissingErrorMessage 
-        function was chosen for form field ${formFieldLabel}.`
-      );
-      return;
+  if (errorMessage) {
+    formFieldErrorMessage.textContent = errorMessage;
+  } else {
+    console.log(
+      `Error: ${formField.name} does not have a corresponding ${messageType}.`
+    );
   }
-  formFieldErrorMessageNode.textContent = message;
+}
+
+function getValueMissingErrorMessage(formField) {
+  let formFieldErrorMessage = formField.nextElementSibling.lastElementChild,
+    errorMessage = formFieldObj[formField.name].valueMissingErrorMessage,
+    errorMessageExists = formFieldObj[formField.name].hasOwnProperty(
+      "valueMissingErrorMessage"
+    );
+
+  displayErrorMessage(formFieldErrorMessage, errorMessage, errorMessageExists);
 }
 
 function getTooLongErrorMessage(formField) {
-  let formFieldLabel = formField.previousElementSibling.textContent
-      .slice(0, -1)
-      .toLowerCase(),
-    formFieldErrorMessageNode = formField.nextElementSibling.lastElementChild,
-    message = `Your ${formFieldLabel} `;
+  let formFieldErrorMessage = formField.nextElementSibling.lastElementChild,
+    errorMessage = formFieldObj[formField.name].tooLongErrorMessage,
+    errorMessageExists = formFieldObj[formField.name].hasOwnProperty(
+      "tooLongErrorMessage"
+    );
 
-  switch (formField.id) {
-    case "first-name":
-    case "last-name":
-      message += "is really long! Please contact customer support for help.";
-      break;
-    case "user-name":
-      message += " must be under 30 characters.";
-      break;
-    case "email":
-      message += "address must be under 254 characters.";
-      break;
-    case "user-password":
-      message += "must be under 100 characters.";
-      break;
-    default:
-      console.log(
-        `Error: None of the error messages in the getTooLongErrorMessage 
-        function was chosen for form field ${formFieldLabel}.`
-      );
-      return;
+  if (errorMessageExists) {
+    formFieldErrorMessage.textContent = errorMessage;
+  } else {
+    console.log(
+      `Error: ${formField.name} does not have a corresponding error message for too long inputs.`
+    );
+    return;
   }
-  formFieldErrorMessageNode.textContent = message;
 }
 
 function getTooShortErrorMessage(formField) {
-  let formFieldLabel = formField.previousElementSibling.textContent
-      .slice(0, -1)
-      .toLowerCase(),
-    formFieldErrorMessageNode = formField.nextElementSibling.lastElementChild,
-    message = `Your ${formFieldLabel} `;
+  let formFieldErrorMessage = formField.nextElementSibling.lastElementChild,
+    errorMessage = formFieldObj[formField.name].tooShortErrorMessage;
 
-  switch (formField.id) {
-    case "user-name":
-      message += "must be at least 6 characters long.";
-      break;
-    case "user-password":
-      message += "must be at least 8 characters long.";
-      break;
-    default:
-      console.log(
-        `Error: None of the error messages in the getTooShortErrorMessage 
-        function was chosen for form field ${formFieldLabel}.`
-      );
-      return;
+  if (formFieldObj[formField.name].hasOwnProperty("tooShortErrorMessage")) {
+    formFieldErrorMessage.textContent = errorMessage;
+  } else {
+    console.log(
+      `Error: ${formField.name} does not have a corresponding error message for too short inputs.`
+    );
+    return;
   }
-  formFieldErrorMessageNode.textContent = message;
 }
 
 function getPatternMismatchErrorMessage(formField) {
-  let formFieldLabel = formField.previousElementSibling.textContent
-      .slice(0, -1)
-      .toLowerCase(),
-    formFieldErrorMessageNode = formField.nextElementSibling.lastElementChild,
-    message = "";
+  let formFieldErrorMessage = formField.nextElementSibling.lastElementChild,
+    errorMessage = formFieldObj[formField.name].patternMismatchErrorMessage;
 
-  switch (formField.id) {
-    case "first-name":
-    case "last-name":
-      message = `Please enter a valid ${formFieldLabel} using the English alphabet.`;
-      break;
-    case "user-name":
-      message = `User names can only contain alphanumeric and space characters.`;
-      break;
-    case "phone-number":
-      message = `Please enter a valid 10 digit US phone number.`;
-      break;
-    case "user-password":
-      message = `Passwords must between 8 - 48 characters long, contain 1 
-        uppercase letter, 1 lowercase letter, 1 number, and 1 special character.`;
-      break;
-    default:
-      console.log(
-        `Error: None of the error messages in the getTooShortErrorMessage 
-      function was chosen for form field ${formFieldLabel}.`
-      );
-      return;
+  if (
+    formFieldObj[formField.name].hasOwnProperty("patternMismatchErrorMessage")
+  ) {
+    formFieldErrorMessage.textContent = errorMessage;
+  } else {
+    console.log(
+      `Error: ${formField.name} does not have a corresponding error message for pattern mismatch.`
+    );
+    return;
   }
-  formFieldErrorMessageNode.textContent = message;
 }
 
 function getTypeMismatchErrorMessage(formField) {
-  let formFieldErrorMessageNode = formField.nextElementSibling.lastElementChild,
-    message = `Please enter a valid email address. Example: sample@gmail.com`;
+  let formFieldErrorMessage = formField.nextElementSibling.lastElementChild,
+    errorMessage = formFieldObj[formField.name].typeMismatchErrorMessage;
 
-  formFieldErrorMessageNode.textContent = message;
+  if (formFieldObj[formField.name].hasOwnProperty("typeMismatchErrorMessage")) {
+    formFieldErrorMessage.textContent = errorMessage;
+  } else {
+    console.log(
+      `Error: ${formField.name} does not have a corresponding error message for type mismatch.`
+    );
+    return;
+  }
 }
 
 function checkPasswordMismatch(formField) {
@@ -466,8 +455,8 @@ function checkPasswordMismatch(formField) {
 }
 
 function getPasswordMismatchErrorMessage(formField) {
-  let passwordErrorMessageNode = formField.nextElementSibling.lastElementChild,
-    message = `The passwords don't match.`;
+  let passwordErrorMessage = formField.nextElementSibling.lastElementChild,
+    errorMessage = formFieldObj[formField.name].passwordMismatchErrorMessage;
 
-  passwordErrorMessageNode.textContent = message;
+  passwordErrorMessage.textContent = errorMessage;
 }
