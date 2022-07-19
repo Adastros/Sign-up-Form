@@ -1,5 +1,6 @@
 :root {
   --password-criteria: lightgray;
+  --visibility: hidden;
 
   height: 100%;
   display: flex;
@@ -22,7 +23,6 @@ body {
 main {
   display: flex;
   padding: 5rem;
-  gap: 1rem;
 }
 
 ul {
@@ -105,13 +105,13 @@ h1 {
 }
 
 .create-account-container {
-  width: 50%;
+  flex: 1;
 }
 
 .create-account-image {
   display: flex;
   align-items: center;
-  width: 50%;
+  flex: 1;
   background-color: #eeeeee;
 }
 
@@ -138,4 +138,18 @@ h1 {
   right: 0.1rem;
   height: 1rem;
   width: 1rem;
+}
+
+.user-input {
+  width: 100%;
+}
+
+.isvalid {
+  display: flex;
+}
+
+.isvalid::after {
+  content:'✓';
+  color: green;
+  visibility: var(--visibility);
 }

@@ -9,7 +9,8 @@ const form = document.querySelector("form"),
   passwordCriteria = document.getElementsByTagName("li"),
   confirmUserPassword = document.getElementById("confirm-user-password"),
   firstNameErrorField = document.querySelector(".error-first-name"),
-  firstNameErrorMsg = document.querySelector(".error-msg-first-name");
+  firstNameErrorMsg = document.querySelector(".error-msg-first-name"),
+  signUpImage = document.querySelector(".form-img");
 
 const formFieldObj = {
   firstName: {
@@ -285,7 +286,7 @@ function unHighlightField(formField) {
 // at certain points rather than one combine into one larger function to toggle error
 // fields.
 function showErrorField(formField) {
-  let errorField = formField.nextElementSibling;
+  let errorField = formField.parentElement.nextElementSibling;
 
   if (errorField.classList.contains("hide")) {
     errorField.classList.toggle("hide");
@@ -293,7 +294,7 @@ function showErrorField(formField) {
 }
 
 function hideErrorField(formField) {
-  let errorField = formField.nextElementSibling;
+  let errorField = formField.parentElement.nextElementSibling;
 
   if (!errorField.classList.contains("hide")) {
     errorField.classList.toggle("hide");
@@ -305,18 +306,26 @@ function hideErrorField(formField) {
 // at certain points rather than one combine into one larger function to toggle hide
 // class.
 function showCheckmark(formField) {
-  let checkmark = formField.nextElementSibling.nextElementSibling;
+  let checkmark = formField.parentElement,
+    visibility = window
+      .getComputedStyle(checkmark, "::after")
+      .getPropertyValue("visibility");
 
-  if (checkmark.classList.contains("hide")) {
-    checkmark.classList.toggle("hide");
+  if (visibility === "hidden") {
+    //checkmark.classList.toggle("hide");
+    checkmark.style.setProperty("--visibility", "visible");
   }
 }
 
 function hideCheckmark(formField) {
-  let checkmark = formField.nextElementSibling.nextElementSibling;
+  let checkmark = formField.parentElement,
+    visibility = window
+      .getComputedStyle(checkmark, "::after")
+      .getPropertyValue("visibility");
 
-  if (!checkmark.classList.contains("hide")) {
-    checkmark.classList.toggle("hide");
+  if (visibility !== "hidden") {
+    //checkmark.classList.toggle("hide");
+    checkmark.style.setProperty("--visibility", "hidden");
   }
 }
 
@@ -343,7 +352,7 @@ function checkForErrorType(formField) {
     default: // Error with code if the fields not including confirm password were invalid but did not match an error type
       if (formField.id !== "confirm-user-password") {
         console.log(
-          `Error: None of the error messages in the checkForErrorType function was chosen for form field ${formFieldLabel}.`
+          `Error: None of the error messages in the checkForErrorType function was chosen for form field ${formField.name}.`
         );
       } else {
         // applies only to confirm password field. Executes when no mismatch found
@@ -361,7 +370,7 @@ function checkForErrorType(formField) {
 }
 
 function displayErrorMessage(formField, messageType) {
-  let formFieldErrorMessage = formField.nextElementSibling.lastElementChild,
+  let formFieldErrorMessage = formField.parentElement.nextElementSibling.lastElementChild,
     errorMessage = formFieldObj[formField.name][messageType];
 
   if (errorMessage) {

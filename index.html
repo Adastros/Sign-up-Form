@@ -20,15 +20,17 @@
           <h2>Create your Account</h2>
           <div class="form-field">
             <label for="first-name">First Name:</label>
-            <input
-              type="text"
-              id="first-name"
-              class="user-input"
-              name="firstName"
-              maxlength="100"
-              pattern="[A-Za-z]+"
-              required
-            />
+            <span class="isvalid">
+              <input
+                type="text"
+                id="first-name"
+                class="user-input"
+                name="firstName"
+                maxlength="100"
+                pattern="[A-Za-z]+"
+                required
+              />
+            </span>
             <div class="error-first-name hide">
               <img
                 class="error-img"
@@ -36,14 +38,10 @@
                 alt=""
               /><span class="error-msg-first-name"></span>
             </div>
-            <img
-              class="checkmark hide"
-              src="./images/check_FILL0_wght400_GRAD0_opsz48.svg"
-              alt=""
-            />
           </div>
           <div class="form-field">
             <label for="last-name">Last Name:</label>
+            <span class="isvalid">
             <input
               type="text"
               id="last-name"
@@ -53,6 +51,7 @@
               pattern="[A-Za-z]+"
               required
             />
+          </span>
             <div class="error-first-name hide">
               <img
                 class="error-img"
@@ -60,24 +59,21 @@
                 alt=""
               /><span class="error-msg-first-name"></span>
             </div>
-            <img
-              class="checkmark hide"
-              src="./images/check_FILL0_wght400_GRAD0_opsz48.svg"
-              alt=""
-            />
           </div>
           <div class="form-field">
             <label for="user-name">User Name:</label>
-            <input
-              type="text"
-              id="user-name"
-              class="user-input"
-              name="userName"
-              minlength="6"
-              maxlength="30"
-              pattern="[A-Za-z0-9 ]+"
-              required
-            />
+            <span class="isvalid">
+              <input
+                type="text"
+                id="user-name"
+                class="user-input"
+                name="userName"
+                minlength="6"
+                maxlength="30"
+                pattern="[A-Za-z0-9 ]+"
+                required
+              />
+            </span>
             <div class="error-first-name hide">
               <img
                 class="error-img"
@@ -85,22 +81,19 @@
                 alt=""
               /><span class="error-msg-first-name"></span>
             </div>
-            <img
-              class="checkmark hide"
-              src="./images/check_FILL0_wght400_GRAD0_opsz48.svg"
-              alt=""
-            />
           </div>
           <div class="form-field">
             <label for="email">E-mail:</label>
-            <input
-              type="email"
-              id="email"
-              class="user-input"
-              name="email"
-              maxlength="24"
-              required
-            />
+            <span class="isvalid">
+              <input
+                type="email"
+                id="email"
+                class="user-input"
+                name="email"
+                maxlength="24"
+                required
+              />
+            </span>
             <div class="error-first-name hide">
               <img
                 class="error-img"
@@ -108,21 +101,18 @@
                 alt=""
               /><span class="error-msg-first-name"></span>
             </div>
-            <img
-              class="checkmark hide"
-              src="./images/check_FILL0_wght400_GRAD0_opsz48.svg"
-              alt=""
-            />
           </div>
           <div class="form-field">
             <label for="phone-number">Phone Number: <i>(optional)</i></label>
-            <input
-              type="tel"
-              id="phone-number"
-              class="user-input"
-              name="phoneNumber"
-              pattern="^\s*(?:\+?(\d{1}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$"
-            />
+            <span class="isvalid">
+              <input
+                type="tel"
+                id="phone-number"
+                class="user-input"
+                name="phoneNumber"
+                pattern="^\s*(?:\+?(\d{1}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$"
+              />
+            </span>
             <div class="error-first-name hide">
               <img
                 class="error-img"
@@ -130,24 +120,21 @@
                 alt=""
               /><span class="error-msg-first-name"></span>
             </div>
-            <img
-              class="checkmark hide"
-              src="./images/check_FILL0_wght400_GRAD0_opsz48.svg"
-              alt=""
-            />
           </div>
           <div class="form-field">
             <label for="user-password">Password:</label>
-            <input
-              type="password"
-              id="user-password"
-              class="user-input"
-              name="userPassword"
-              minlength="8"
-              maxlength="48"
-              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#?!@$%^&*-])[A-Za-z\d#?!@$%^&*-]{8,48}$"
-              required
-            />
+            <span class="isvalid">
+              <input
+                type="password"
+                id="user-password"
+                class="user-input"
+                name="userPassword"
+                minlength="8"
+                maxlength="48"
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#?!@$%^&*-])[A-Za-z\d#?!@$%^&*-]{8,48}$"
+                required
+              />
+            </span>
             <div class="error-first-name hide">
               <img
                 class="error-img"
@@ -155,11 +142,6 @@
                 alt=""
               /><span class="error-msg-first-name"></span>
             </div>
-            <img
-              class="checkmark hide"
-              src="./images/check_FILL0_wght400_GRAD0_opsz48.svg"
-              alt=""
-            />
             <div>
               <ul class="password-constraints">
                 <li>8 characters minimum</li>
@@ -172,13 +154,15 @@
           </div>
           <div class="form-field">
             <label for="confirm-user-password">Confirm Password:</label>
-            <input
-              type="password"
-              id="confirm-user-password"
-              class="user-input"
-              name="confirmUserPassword"
-              required
-            />
+            <span class="isvalid">
+              <input
+                type="password"
+                id="confirm-user-password"
+                class="user-input"
+                name="confirmUserPassword"
+                required
+              />
+            </span>
             <div class="error-first-name hide">
               <img
                 class="error-img"
@@ -186,11 +170,6 @@
                 alt=""
               /><span class="error-msg-first-name"></span>
             </div>
-            <img
-              class="checkmark hide"
-              src="./images/check_FILL0_wght400_GRAD0_opsz48.svg"
-              alt=""
-            />
           </div>
           <div class="receive-promotions">
             <input
