@@ -1,6 +1,8 @@
 :root {
   --password-criteria: lightgray;
   --visibility: hidden;
+  --error: #dd0000;
+  --valid: #00dd00;
 
   height: 100%;
   display: flex;
@@ -62,24 +64,30 @@ button {
   align-self: center;
 }
 
-form input {
-  border-color: black;
+input {
+  padding: 0.25rem;
+  border: 2px grey solid;
+  border-radius: 4px;
 }
 
-form input[type="checkbox"] {
+input[type="checkbox"] {
   align-self: center;
 }
 
-form input:not(:focus):invalid {
+input:not(:focus):invalid,
+input:not(focus),
+input:focus:invalid {
   border-color: black;
 }
 
-form input:focus:invalid {
-  border-color: black;
+input.valid {
+  border-color: var(--valid);
+  box-shadow: 0 0 2px var(--valid);
 }
 
-form input.error:invalid {
-  border-color: red;
+input.error:invalid {
+  border-color: var(--error);
+  box-shadow: 0 0 2px var(--error);
 }
 
 h1 {
@@ -91,7 +99,7 @@ h1 {
 }
 
 .span {
-  color: red;
+  color: var(--error);
 }
 
 .receive-promotions {
@@ -125,7 +133,12 @@ h1 {
 }
 
 .error-img {
-  width: 1.5rem;
+  width: 1rem;
+  align-self: flex-start
+}
+
+.error-field {
+  display: flex;
 }
 
 .hide {
@@ -146,10 +159,19 @@ h1 {
 
 .isvalid {
   display: flex;
+  align-items: center;
 }
 
 .isvalid::after {
-  content:'✓';
-  color: green;
+  content: "";
+  background-image: url("./images/check_FILL0_wght400_GRAD0_opsz48-green2.svg");
+  background-size: contain;
+  display: inline-block;
+  height: 1.5rem;
+  width: 1.5rem;
   visibility: var(--visibility);
+}
+
+.error-message {
+  color: var(--error);
 }

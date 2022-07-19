@@ -75,9 +75,9 @@ const lazyValidation = {
         setAggressiveValidation(e.target.name, true);
       } else {
         if (e.target.value === "") {
-          hideCheckmark(e.target);
+          unHighlightValidField(e.target);
         } else {
-          showCheckmark(e.target);
+          highlightValidField(e.target);
         }
         hideErrorField(e.target);
         unHighlightField(e.target);
@@ -97,7 +97,7 @@ const lazyValidation = {
         checkForErrorType(e.target);
         setAggressiveValidation(e.target.name, true);
       } else {
-        showCheckmark(e.target);
+        highlightValidField(e.target);
         hideErrorField(e.target);
         unHighlightField(e.target);
         setAggressiveValidation(e.target.name, false);
@@ -113,7 +113,7 @@ const aggressiveValidation = {
         if (!e.target.validity.valid) {
           checkForErrorType(e.target);
         } else {
-          showCheckmark(e.target);
+          highlightValidField(e.target);
           hideErrorField(e.target);
           unHighlightField(e.target);
           setAggressiveValidation(e.target.name, false);
@@ -129,7 +129,7 @@ const aggressiveValidation = {
         } else {
           hideErrorField(e.target);
           unHighlightField(e.target);
-          showCheckmark(e.target);
+          highlightValidField(e.target);
           setAggressiveValidation(e.target.name, false);
         }
       }
@@ -157,7 +157,8 @@ const aggressiveValidation = {
         } else {
           hideErrorField(e.target);
           unHighlightField(e.target);
-          showCheckmark(e.target);
+          highlightValidField(e.target);
+          //showCheckmark(e.target);
           setAggressiveValidation(e.target.name, false);
         }
       }
@@ -268,8 +269,15 @@ function getAggressiveValidation(formField) {
   return formFieldObj[formField].validateAggressive;
 }
 
-// Two separate functions to easily determine if input field border color will be
-// red or black to indicate the input as invalid or valid, respectively.
+/*
+
+Field Validity Indicators
+
+Instead of creating a toggle function, all the functions below come in pairs 
+for readability purposes. 
+
+*/
+
 function highlightField(formField) {
   if (!formField.classList.contains("error")) {
     formField.classList.toggle("error");
@@ -282,9 +290,6 @@ function unHighlightField(formField) {
   }
 }
 
-// Two separate functions to easily determine if error field will be hidden or shown
-// at certain points rather than one combine into one larger function to toggle error
-// fields.
 function showErrorField(formField) {
   let errorField = formField.parentElement.nextElementSibling;
 
@@ -302,9 +307,6 @@ function hideErrorField(formField) {
   }
 }
 
-// Two separate functions to easily determine if checkmark will be hidden or shown
-// at certain points rather than one combine into one larger function to toggle hide
-// class.
 function showCheckmark(formField) {
   let checkmark = formField.parentElement,
     visibility = window
@@ -312,7 +314,6 @@ function showCheckmark(formField) {
       .getPropertyValue("visibility");
 
   if (visibility === "hidden") {
-    //checkmark.classList.toggle("hide");
     checkmark.style.setProperty("--visibility", "visible");
   }
 }
@@ -324,10 +325,31 @@ function hideCheckmark(formField) {
       .getPropertyValue("visibility");
 
   if (visibility !== "hidden") {
-    //checkmark.classList.toggle("hide");
     checkmark.style.setProperty("--visibility", "hidden");
   }
 }
+
+function highlightValidField(formField) {
+  if (!formField.classList.contains("valid")) {
+    formField.classList.toggle("valid");
+  }
+
+  showCheckmark(formField);
+}
+
+function unHighlightValidField(formField) {
+  if (formField.classList.contains("valid")) {
+    formField.classList.toggle("valid");
+  }
+
+  hideCheckmark(formField);
+}
+
+/*
+
+Error Checking Functions
+
+*/
 
 function checkForErrorType(formField) {
   switch (true) {
@@ -358,19 +380,20 @@ function checkForErrorType(formField) {
         // applies only to confirm password field. Executes when no mismatch found
         hideErrorField(formField);
         unHighlightField(formField);
-        showCheckmark(formField);
+        highlightValidField(e.target);
         setAggressiveValidation(formField.name, false);
       }
       return;
   }
 
-  hideCheckmark(formField);
+  unHighlightValidField(formField);
   highlightField(formField);
   showErrorField(formField);
 }
 
 function displayErrorMessage(formField, messageType) {
-  let formFieldErrorMessage = formField.parentElement.nextElementSibling.lastElementChild,
+  let formFieldErrorMessage =
+      formField.parentElement.nextElementSibling.lastElementChild,
     errorMessage = formFieldObj[formField.name][messageType];
 
   if (errorMessage) {
