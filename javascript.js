@@ -373,77 +373,6 @@ function displayErrorMessage(formField, messageType) {
   }
 }
 
-function getValueMissingErrorMessage(formField) {
-  let formFieldErrorMessage = formField.nextElementSibling.lastElementChild,
-    errorMessage = formFieldObj[formField.name].valueMissingErrorMessage,
-    errorMessageExists = formFieldObj[formField.name].hasOwnProperty(
-      "valueMissingErrorMessage"
-    );
-
-  displayErrorMessage(formFieldErrorMessage, errorMessage, errorMessageExists);
-}
-
-function getTooLongErrorMessage(formField) {
-  let formFieldErrorMessage = formField.nextElementSibling.lastElementChild,
-    errorMessage = formFieldObj[formField.name].tooLongErrorMessage,
-    errorMessageExists = formFieldObj[formField.name].hasOwnProperty(
-      "tooLongErrorMessage"
-    );
-
-  if (errorMessageExists) {
-    formFieldErrorMessage.textContent = errorMessage;
-  } else {
-    console.log(
-      `Error: ${formField.name} does not have a corresponding error message for too long inputs.`
-    );
-    return;
-  }
-}
-
-function getTooShortErrorMessage(formField) {
-  let formFieldErrorMessage = formField.nextElementSibling.lastElementChild,
-    errorMessage = formFieldObj[formField.name].tooShortErrorMessage;
-
-  if (formFieldObj[formField.name].hasOwnProperty("tooShortErrorMessage")) {
-    formFieldErrorMessage.textContent = errorMessage;
-  } else {
-    console.log(
-      `Error: ${formField.name} does not have a corresponding error message for too short inputs.`
-    );
-    return;
-  }
-}
-
-function getPatternMismatchErrorMessage(formField) {
-  let formFieldErrorMessage = formField.nextElementSibling.lastElementChild,
-    errorMessage = formFieldObj[formField.name].patternMismatchErrorMessage;
-
-  if (
-    formFieldObj[formField.name].hasOwnProperty("patternMismatchErrorMessage")
-  ) {
-    formFieldErrorMessage.textContent = errorMessage;
-  } else {
-    console.log(
-      `Error: ${formField.name} does not have a corresponding error message for pattern mismatch.`
-    );
-    return;
-  }
-}
-
-function getTypeMismatchErrorMessage(formField) {
-  let formFieldErrorMessage = formField.nextElementSibling.lastElementChild,
-    errorMessage = formFieldObj[formField.name].typeMismatchErrorMessage;
-
-  if (formFieldObj[formField.name].hasOwnProperty("typeMismatchErrorMessage")) {
-    formFieldErrorMessage.textContent = errorMessage;
-  } else {
-    console.log(
-      `Error: ${formField.name} does not have a corresponding error message for type mismatch.`
-    );
-    return;
-  }
-}
-
 function checkPasswordMismatch(formField) {
   if (formField.id === "confirm-user-password") {
     if (userPassword.value !== confirmUserPassword.value) {
@@ -452,11 +381,4 @@ function checkPasswordMismatch(formField) {
   }
 
   return false;
-}
-
-function getPasswordMismatchErrorMessage(formField) {
-  let passwordErrorMessage = formField.nextElementSibling.lastElementChild,
-    errorMessage = formFieldObj[formField.name].passwordMismatchErrorMessage;
-
-  passwordErrorMessage.textContent = errorMessage;
 }
