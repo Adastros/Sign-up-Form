@@ -1,16 +1,8 @@
 const form = document.querySelector("form"),
   formFields = form.elements,
-  firstName = document.getElementById("first-name"),
-  lastName = document.getElementById("last-name"),
-  userName = document.getElementById("user-name"),
-  email = document.getElementById("email"),
-  phoneNumber = document.getElementById("phone-number"),
-  userPassword = document.getElementById("user-password"),
   passwordCriteriaElements = document.getElementsByTagName("li"),
-  confirmUserPassword = document.getElementById("confirm-user-password"),
-  firstNameErrorField = document.querySelector(".error-first-name"),
-  firstNameErrorMsg = document.querySelector(".error-msg-first-name"),
-  signUpImage = document.querySelector(".form-img");
+  userPassword = document.getElementById("user-password"),
+  confirmUserPassword = document.getElementById("confirm-user-password");
 
 const formFieldObj = {
   firstName: {
