@@ -270,24 +270,26 @@ for readability purposes.
 
 function setErrorState(formField) {
   removeAsValid(formField);
-  hideCheckmark(formField);
   setAsError(formField);
   showErrorField(formField);
+  showErrorIcon(formField);
+  showIcon(formField);
 }
 
 function setValidState(formField) {
   removeAsError(formField);
   hideErrorField(formField);
   setAsValid(formField);
-  showCheckmark(formField);
+  showValidIcon(formField);
+  showIcon(formField);
 }
 
-// only for optional entries with no input
+// only for optional entries with no input; Resets state
 function setOptionalState(formField) {
   removeAsValid(formField);
-  hideCheckmark(formField);
   removeAsError(formField);
   hideErrorField(formField);
+  hideIcon(formField);
 }
 
 function setAsError(formField) {
@@ -315,7 +317,7 @@ function hideErrorField(formField) {
 
   if (!errorField.classList.contains("hide")) {
     errorField.classList.toggle("hide");
-    errorField.lastElementChild.textContent = "";
+    errorField.firstElementChild.textContent = "";
   }
 }
 
@@ -331,26 +333,44 @@ function removeAsValid(formField) {
   }
 }
 
-function showCheckmark(formField) {
-  let checkmark = formField.parentElement,
+function showIcon(formField) {
+  let icon = formField.parentElement,
     visibility = window
-      .getComputedStyle(checkmark, "::after")
+      .getComputedStyle(icon, "::after")
       .getPropertyValue("visibility");
 
   if (visibility === "hidden") {
-    checkmark.style.setProperty("--visibility", "visible");
+    icon.style.setProperty("--visibility", "visible");
   }
 }
 
-function hideCheckmark(formField) {
-  let checkmark = formField.parentElement,
+function hideIcon(formField) {
+  let icon = formField.parentElement,
     visibility = window
-      .getComputedStyle(checkmark, "::after")
+      .getComputedStyle(icon, "::after")
       .getPropertyValue("visibility");
 
   if (visibility !== "hidden") {
-    checkmark.style.setProperty("--visibility", "hidden");
+    icon.style.setProperty("--visibility", "hidden");
   }
+}
+
+function showErrorIcon(formField) {
+  let icon = formField.parentElement;
+
+  icon.style.setProperty(
+    "--icon-url",
+    `url("./images/error_FILL0_wght400_GRAD0_opsz48-red.svg")`
+  );
+}
+
+function showValidIcon(formField) {
+  let icon = formField.parentElement;
+
+  icon.style.setProperty(
+    "--icon-url",
+    `url("./images/check_circle_FILL0_wght400_GRAD0_opsz48-green.svg")`
+  );
 }
 
 /*
@@ -397,7 +417,7 @@ function checkForErrorType(formField) {
 
 function displayErrorMessage(formField, messageType) {
   let formFieldErrorMessage =
-      formField.parentElement.nextElementSibling.lastElementChild,
+      formField.parentElement.nextElementSibling.firstElementChild,
     errorMessage = formFieldObj[formField.name][messageType];
 
   if (errorMessage) {

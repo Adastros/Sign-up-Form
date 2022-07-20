@@ -3,6 +3,7 @@
   --visibility: hidden;
   --error: #dd0000;
   --valid: #00dd00;
+  --icon-url: '';
 
   height: 100%;
   display: flex;
@@ -137,6 +138,10 @@ h1 {
   display: flex;
 }
 
+.error-message {
+  color: var(--error);
+}
+
 .hide {
   visibility: hidden;
 }
@@ -149,25 +154,23 @@ h1 {
   width: 1rem;
 }
 
-.user-input {
-  width: 100%;
-}
-
-.isvalid {
+.icon {
   display: flex;
   align-items: center;
+  gap: 0.25rem;
 }
 
-.isvalid::after {
+.icon::after {
   content: "";
-  background-image: url("./images/check_FILL0_wght400_GRAD0_opsz48-green2.svg");
+  background-image: var(--icon-url);
   background-size: contain;
+  background-repeat: no-repeat;
   display: inline-block;
   height: 1.5rem;
   width: 1.5rem;
   visibility: var(--visibility);
 }
 
-.error-message {
-  color: var(--error);
+.user-input {
+  width: 100%;
 }
