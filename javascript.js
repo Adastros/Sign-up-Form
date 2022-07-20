@@ -75,12 +75,10 @@ const lazyValidation = {
         setAggressiveValidation(e.target.name, true);
       } else {
         if (e.target.value === "") {
-          unHighlightValidField(e.target);
+          setOptionalState(e.target);
         } else {
-          highlightValidField(e.target);
+          setValidState(e.target);
         }
-        hideErrorField(e.target);
-        unHighlightField(e.target);
         setAggressiveValidation(e.target.name, false);
       }
     });
@@ -97,9 +95,7 @@ const lazyValidation = {
         checkForErrorType(e.target);
         setAggressiveValidation(e.target.name, true);
       } else {
-        highlightValidField(e.target);
-        hideErrorField(e.target);
-        unHighlightField(e.target);
+        setValidState(e.target);
         setAggressiveValidation(e.target.name, false);
       }
     });
@@ -113,9 +109,11 @@ const aggressiveValidation = {
         if (!e.target.validity.valid) {
           checkForErrorType(e.target);
         } else {
-          highlightValidField(e.target);
-          hideErrorField(e.target);
-          unHighlightField(e.target);
+          if (e.target.value === "") {
+            setOptionalState(e.target);
+          } else {
+            setValidState(e.target);
+          }
           setAggressiveValidation(e.target.name, false);
         }
       }
@@ -127,9 +125,7 @@ const aggressiveValidation = {
         if (!e.target.validity.valid) {
           checkForErrorType(e.target);
         } else {
-          hideErrorField(e.target);
-          unHighlightField(e.target);
-          highlightValidField(e.target);
+          setValidState(e.target);
           setAggressiveValidation(e.target.name, false);
         }
       }
@@ -155,10 +151,7 @@ const aggressiveValidation = {
         if (!e.target.validity.valid) {
           checkForErrorType(e.target);
         } else {
-          hideErrorField(e.target);
-          unHighlightField(e.target);
-          highlightValidField(e.target);
-          //showCheckmark(e.target);
+          setValidState(e.target);
           setAggressiveValidation(e.target.name, false);
         }
       }
@@ -202,9 +195,6 @@ form.addEventListener("submit", (e) => {
       formFields[i].id === "confirm-user-password"
     ) {
       checkForErrorType(formFields[i]);
-    } else {
-      hideErrorField(formFields[i]);
-      unHighlightField(formFields[i]);
     }
   }
 
@@ -278,13 +268,35 @@ for readability purposes.
 
 */
 
-function highlightField(formField) {
+function setErrorState(formField) {
+  removeAsValid(formField);
+  hideCheckmark(formField);
+  setAsError(formField);
+  showErrorField(formField);
+}
+
+function setValidState(formField) {
+  removeAsError(formField);
+  hideErrorField(formField);
+  setAsValid(formField);
+  showCheckmark(formField);
+}
+
+// only for optional entries with no input
+function setOptionalState(formField) {
+  removeAsValid(formField);
+  hideCheckmark(formField);
+  removeAsError(formField);
+  hideErrorField(formField);
+}
+
+function setAsError(formField) {
   if (!formField.classList.contains("error")) {
     formField.classList.toggle("error");
   }
 }
 
-function unHighlightField(formField) {
+function removeAsError(formField) {
   if (formField.classList.contains("error")) {
     formField.classList.toggle("error");
   }
@@ -304,6 +316,18 @@ function hideErrorField(formField) {
   if (!errorField.classList.contains("hide")) {
     errorField.classList.toggle("hide");
     errorField.lastElementChild.textContent = "";
+  }
+}
+
+function setAsValid(formField) {
+  if (!formField.classList.contains("valid")) {
+    formField.classList.toggle("valid");
+  }
+}
+
+function removeAsValid(formField) {
+  if (formField.classList.contains("valid")) {
+    formField.classList.toggle("valid");
   }
 }
 
@@ -327,22 +351,6 @@ function hideCheckmark(formField) {
   if (visibility !== "hidden") {
     checkmark.style.setProperty("--visibility", "hidden");
   }
-}
-
-function highlightValidField(formField) {
-  if (!formField.classList.contains("valid")) {
-    formField.classList.toggle("valid");
-  }
-
-  showCheckmark(formField);
-}
-
-function unHighlightValidField(formField) {
-  if (formField.classList.contains("valid")) {
-    formField.classList.toggle("valid");
-  }
-
-  hideCheckmark(formField);
 }
 
 /*
@@ -378,17 +386,13 @@ function checkForErrorType(formField) {
         );
       } else {
         // applies only to confirm password field. Executes when no mismatch found
-        hideErrorField(formField);
-        unHighlightField(formField);
-        highlightValidField(e.target);
+        setValidState(formField);
         setAggressiveValidation(formField.name, false);
       }
       return;
   }
 
-  unHighlightValidField(formField);
-  highlightField(formField);
-  showErrorField(formField);
+  setErrorState(formField);
 }
 
 function displayErrorMessage(formField, messageType) {

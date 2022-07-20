@@ -68,16 +68,12 @@ input {
   padding: 0.25rem;
   border: 2px grey solid;
   border-radius: 4px;
+  border-color: black;
 }
 
 input[type="checkbox"] {
   align-self: center;
-}
-
-input:not(:focus):invalid,
-input:not(focus),
-input:focus:invalid {
-  border-color: black;
+  
 }
 
 input.valid {
@@ -85,7 +81,7 @@ input.valid {
   box-shadow: 0 0 2px var(--valid);
 }
 
-input.error:invalid {
+input.error {
   border-color: var(--error);
   box-shadow: 0 0 2px var(--error);
 }
