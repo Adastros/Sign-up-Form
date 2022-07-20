@@ -101,7 +101,7 @@ h1 {
 .receive-promotions {
   display: flex;
   flex-direction: row;
-  gap: 1rem;
+  
 }
 
 .agreement-text {

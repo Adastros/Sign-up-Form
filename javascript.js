@@ -58,7 +58,7 @@ const formFieldObj = {
     tooLongErrorMessage: "Your password must be under 48 characters",
     tooShortErrorMessage: "Your password must be at least 8 characters long.",
     patternMismatchErrorMessage:
-      "Your password must between 8 - 48 characters long, contain 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.",
+      "Your password must between 8 - 48 characters long and meet the requirements below",
   },
   confirmUserPassword: {
     validateAggressive: false,
