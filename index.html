@@ -28,6 +28,7 @@
                 name="firstName"
                 maxlength="100"
                 pattern="[A-Za-z]+"
+                placeholder="First Name"
                 required
               />
             </span>
@@ -45,6 +46,7 @@
               name="lastName"
               maxlength="100"
               pattern="[A-Za-z]+"
+              placeholder="Last Name"
               required
             />
           </span>
@@ -63,6 +65,7 @@
                 minlength="6"
                 maxlength="30"
                 pattern="[A-Za-z0-9 ]+"
+                placeholder="User Name"
                 required
               />
             </span>
@@ -79,6 +82,7 @@
                 class="user-input"
                 name="email"
                 maxlength="24"
+                placeholder="Email"
                 required
               />
             </span>
@@ -95,7 +99,8 @@
                 class="user-input"
                 name="phoneNumber"
                 pattern="^\s*[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$"
-              />
+                placeholder="Phone Number"
+                />
             </span>
             <div class="error-field hide">
               <span class="error-message"></span>
@@ -112,6 +117,7 @@
                 minlength="8"
                 maxlength="48"
                 pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#?!@$%^&*-])[A-Za-z\d#?!@$%^&*-]{8,48}$"
+                placeholder="Password"
                 required
               />
             </span>
@@ -136,6 +142,7 @@
                 id="confirm-user-password"
                 class="user-input"
                 name="confirmUserPassword"
+                placeholder="Confirm Password"
                 required
               />
             </span>
