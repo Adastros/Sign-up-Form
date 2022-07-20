@@ -226,12 +226,12 @@ function checkPasswordCriteria() {
     if (passwordCriteria[key]()) {
       passwordCriteriaElements[idx].style.setProperty(
         "--password-criteria",
-        "green"
+        "#00dd00"
       );
     } else {
       passwordCriteriaElements[idx].style.setProperty(
         "--password-criteria",
-        "lightgray"
+        "#353232"
       );
     }
   });
@@ -346,7 +346,7 @@ function showErrorIcon(formField) {
 
   icon.style.setProperty(
     "--icon-url",
-    `url("./images/error_FILL0_wght400_GRAD0_opsz48-red.svg")`
+    `url("./images/error_FILL0_wght400_GRAD0_opsz48.svg")`
   );
 }
 

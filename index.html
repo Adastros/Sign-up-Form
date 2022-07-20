@@ -6,7 +6,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      href="https://fonts.googleapis.com/css2?&family=Permanent+Marker&family=Roboto&display=swap"
       rel="stylesheet"
     />
     <title>Create Account</title>
@@ -14,31 +14,30 @@
   </head>
   <body>
     <main>
-      <div class="create-account-container">
-        <form action="" method="post" novalidate>
-          <h1 class="company-name">Ink Gallery</h1>
-          <h2>Create your Account</h2>
-          <div class="form-field">
-            <label for="first-name">First Name:</label>
-            <span class="icon">
-              <input
-                type="text"
-                id="first-name"
-                class="user-input"
-                name="firstName"
-                maxlength="100"
-                pattern="[A-Za-z]+"
-                placeholder="First Name"
-                required
-              />
-            </span>
-            <div class="error-field hide">
-              <span class="error-message"></span>
-            </div>
+      <form action="" method="post" novalidate>
+        <h1>Ink Gallery</h1>
+        <h2>Create your Account</h2>
+        <div class="form-field">
+          <label for="first-name">First Name:</label>
+          <span class="icon">
+            <input
+              type="text"
+              id="first-name"
+              class="user-input"
+              name="firstName"
+              maxlength="100"
+              pattern="[A-Za-z]+"
+              placeholder="First Name"
+              required
+            />
+          </span>
+          <div class="error-field hide">
+            <span class="error-message"></span>
           </div>
-          <div class="form-field">
-            <label for="last-name">Last Name:</label>
-            <span class="icon">
+        </div>
+        <div class="form-field">
+          <label for="last-name">Last Name:</label>
+          <span class="icon">
             <input
               type="text"
               id="last-name"
@@ -50,136 +49,127 @@
               required
             />
           </span>
-            <div class="error-field hide">
-              <span class="error-message"></span>
-            </div>
+          <div class="error-field hide">
+            <span class="error-message"></span>
           </div>
-          <div class="form-field">
-            <label for="user-name">User Name:</label>
-            <span class="icon">
-              <input
-                type="text"
-                id="user-name"
-                class="user-input"
-                name="userName"
-                minlength="6"
-                maxlength="30"
-                pattern="[A-Za-z0-9 ]+"
-                placeholder="User Name"
-                required
-              />
-            </span>
-            <div class="error-field hide">
-              <span class="error-message"></span>
-            </div>
-          </div>
-          <div class="form-field">
-            <label for="email">E-mail:</label>
-            <span class="icon">
-              <input
-                type="email"
-                id="email"
-                class="user-input"
-                name="email"
-                maxlength="24"
-                placeholder="Email"
-                required
-              />
-            </span>
-            <div class="error-field hide">
-              <span class="error-message"></span>
-            </div>
-          </div>
-          <div class="form-field">
-            <label for="phone-number">Phone Number: <i>(optional)</i></label>
-            <span class="icon">
-              <input
-                type="tel"
-                id="phone-number"
-                class="user-input"
-                name="phoneNumber"
-                pattern="^\s*[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$"
-                placeholder="Phone Number"
-                />
-            </span>
-            <div class="error-field hide">
-              <span class="error-message"></span>
-            </div>
-          </div>
-          <div class="form-field">
-            <label for="user-password">Password:</label>
-            <span class="icon">
-              <input
-                type="password"
-                id="user-password"
-                class="user-input"
-                name="userPassword"
-                minlength="8"
-                maxlength="48"
-                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#?!@$%^&*-])[A-Za-z\d#?!@$%^&*-]{8,48}$"
-                placeholder="Password"
-                required
-              />
-            </span>
-            <div class="error-field hide">
-              <span class="error-message"></span>
-            </div>
-            <div>
-              <ul class="password-constraints">
-                <li>8 characters minimum</li>
-                <li>One lowercase character</li>
-                <li>One uppercase character</li>
-                <li>One number</li>
-                <li>One special character</li>
-              </ul>
-            </div>
-          </div>
-          <div class="form-field">
-            <label for="confirm-user-password">Confirm Password:</label>
-            <span class="icon">
-              <input
-                type="password"
-                id="confirm-user-password"
-                class="user-input"
-                name="confirmUserPassword"
-                placeholder="Confirm Password"
-                required
-              />
-            </span>
-            <div class="error-field hide">
-              <span class="error-message"></span>
-            </div>
-          </div>
-          <div class="receive-promotions">
+        </div>
+        <div class="form-field">
+          <label for="user-name">User Name:</label>
+          <span class="icon">
             <input
-              type="checkbox"
-              id="receive-promotions"
-              name="receivePromotions"
+              type="text"
+              id="user-name"
+              class="user-input"
+              name="userName"
+              minlength="6"
+              maxlength="30"
+              pattern="[A-Za-z0-9 ]+"
+              placeholder="User Name"
+              required
             />
-            <label for="receive-promotions"
-              >I want to receive marketing messages by email.
-            </label>
+          </span>
+          <div class="error-field hide">
+            <span class="error-message"></span>
           </div>
-          <p class="agreement-text">
-            <i>
-              By selecting Create Account, you agree to our
-              <a href="#">Terms of Service</a> and
-              <a href="#">Privacy Policy</a>.
-            </i>
-          </p>
-          <button type="submit">Create Account</button>
-          <p class="have-account-text">
-            Already have an account? <a href="#">Sign In</a>
-          </p>
-        </form>
-      </div>
-      <div class="create-account-image">
-        <img
-          class="form-img"
-          src="./images/christmas_bighero6_edit.png"
-          alt=""
-        />
-      </div>
+        </div>
+        <div class="form-field">
+          <label for="email">E-mail:</label>
+          <span class="icon">
+            <input
+              type="email"
+              id="email"
+              class="user-input"
+              name="email"
+              maxlength="24"
+              placeholder="Email"
+              required
+            />
+          </span>
+          <div class="error-field hide">
+            <span class="error-message"></span>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="phone-number">Phone Number: <i>(optional)</i></label>
+          <span class="icon">
+            <input
+              type="tel"
+              id="phone-number"
+              class="user-input"
+              name="phoneNumber"
+              pattern="^\s*[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$"
+              placeholder="Phone Number"
+            />
+          </span>
+          <div class="error-field hide">
+            <span class="error-message"></span>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="user-password">Password:</label>
+          <span class="icon">
+            <input
+              type="password"
+              id="user-password"
+              class="user-input"
+              name="userPassword"
+              minlength="8"
+              maxlength="48"
+              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#?!@$%^&*-])[A-Za-z\d#?!@$%^&*-]{8,48}$"
+              placeholder="Password"
+              required
+            />
+          </span>
+          <div class="error-field hide">
+            <span class="error-message"></span>
+          </div>
+          <div>
+            <ul>
+              <li>8 characters minimum</li>
+              <li>One lowercase character</li>
+              <li>One uppercase character</li>
+              <li>One number</li>
+              <li>One special character</li>
+            </ul>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="confirm-user-password">Confirm Password:</label>
+          <span class="icon">
+            <input
+              type="password"
+              id="confirm-user-password"
+              class="user-input"
+              name="confirmUserPassword"
+              placeholder="Confirm Password"
+              required
+            />
+          </span>
+          <div class="error-field hide">
+            <span class="error-message"></span>
+          </div>
+        </div>
+        <div class="receive-promotions">
+          <input
+            type="checkbox"
+            id="receive-promotions"
+            name="receivePromotions"
+          />
+          <label for="receive-promotions"
+            >I want to receive marketing messages by email.
+          </label>
+        </div>
+        <p class="agreement-text">
+          <i>
+            By selecting Create Account, you agree to our
+            <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+          </i>
+        </p>
+        <button type="submit">Create Account</button>
+        <p class="have-account-text">
+          Already have an account? <a href="#">Sign In</a>
+        </p>
+      </form>
     </main>
   </body>
 </html>
