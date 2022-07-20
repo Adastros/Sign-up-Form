@@ -6,7 +6,7 @@ const form = document.querySelector("form"),
   email = document.getElementById("email"),
   phoneNumber = document.getElementById("phone-number"),
   userPassword = document.getElementById("user-password"),
-  passwordCriteria = document.getElementsByTagName("li"),
+  passwordCriteriaElements = document.getElementsByTagName("li"),
   confirmUserPassword = document.getElementById("confirm-user-password"),
   firstNameErrorField = document.querySelector(".error-first-name"),
   firstNameErrorMsg = document.querySelector(".error-msg-first-name"),
@@ -135,7 +135,7 @@ const aggressiveValidation = {
       }
 
       // Will always be aggressively checked to provide visual feedback password meets requirements
-      checkPasswordCriteria();
+      checkPasswordCriteria(e.target);
     });
   },
   confirmUserPassword: (formField) => {
@@ -156,6 +156,24 @@ const aggressiveValidation = {
         }
       }
     });
+  },
+};
+
+const passwordCriteria = {
+  checkMinPasswordLength: () => {
+    return userPassword.value.length > 7;
+  },
+  checkLowerCase: () => {
+    return /[a-z]+/.test(userPassword.value);
+  },
+  checkUpperCase: () => {
+    return /[A-Z]+/.test(userPassword.value);
+  },
+  checkNumber: () => {
+    return /[\d]+/.test(userPassword.value);
+  },
+  checkSpecialCharacter: () => {
+    return /[#?!@$%^&*-]+/.test(userPassword.value);
   },
 };
 
@@ -204,51 +222,19 @@ form.addEventListener("submit", (e) => {
 });
 
 function checkPasswordCriteria() {
-  checkMinPasswordLength();
-  checkLowerCase();
-  checkUpperCase();
-  checkNumber();
-  checkSpecialCharacter();
-}
-
-function checkMinPasswordLength() {
-  if (userPassword.value.length > 7) {
-    passwordCriteria[0].style.setProperty("--password-criteria", "green");
-  } else {
-    passwordCriteria[0].style.setProperty("--password-criteria", "lightgray");
-  }
-}
-
-function checkLowerCase() {
-  if (/[a-z]+/.test(userPassword.value)) {
-    passwordCriteria[1].style.setProperty("--password-criteria", "green");
-  } else {
-    passwordCriteria[1].style.setProperty("--password-criteria", "lightgray");
-  }
-}
-
-function checkUpperCase() {
-  if (/[A-Z]+/.test(userPassword.value)) {
-    passwordCriteria[2].style.setProperty("--password-criteria", "green");
-  } else {
-    passwordCriteria[2].style.setProperty("--password-criteria", "lightgray");
-  }
-}
-
-function checkNumber() {
-  if (/[\d]+/.test(userPassword.value)) {
-    passwordCriteria[3].style.setProperty("--password-criteria", "green");
-  } else {
-    passwordCriteria[3].style.setProperty("--password-criteria", "lightgray");
-  }
-}
-
-function checkSpecialCharacter() {
-  if (/[#?!@$%^&*-]+/.test(userPassword.value)) {
-    passwordCriteria[4].style.setProperty("--password-criteria", "green");
-  } else {
-    passwordCriteria[4].style.setProperty("--password-criteria", "lightgray");
-  }
+  Object.keys(passwordCriteria).forEach((key, idx) => {
+    if (passwordCriteria[key]()) {
+      passwordCriteriaElements[idx].style.setProperty(
+        "--password-criteria",
+        "green"
+      );
+    } else {
+      passwordCriteriaElements[idx].style.setProperty(
+        "--password-criteria",
+        "lightgray"
+      );
+    }
+  });
 }
 
 function setAggressiveValidation(formField, bool) {
