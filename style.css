@@ -16,7 +16,6 @@
     Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol";
   font-size: calc(1rem);
-
   background: url("./images/faceyourart.jpg") center/61% repeat;
 }
 
@@ -26,7 +25,8 @@ body {
 
 main {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   background-color: whitesmoke;
   border-radius: 16px;
   opacity: 0.95;
@@ -121,6 +121,11 @@ input.error {
   color: var(--agreement-text);
 }
 
+.credit {
+  align-self: flex-start;
+  margin: 0;
+}
+
 .error-img {
   width: 1rem;
   align-self: flex-start;
@@ -134,8 +139,10 @@ input.error {
   color: var(--error);
 }
 
-.have-account-text {
+.have-account-text,
+.credit {
   align-self: flex-start;
+  margin-bottom: 0;
 }
 
 .hide {
@@ -162,4 +169,5 @@ input.error {
 .receive-promotions {
   display: flex;
   flex-direction: row;
+  margin-top: 0.5rem;
 }
