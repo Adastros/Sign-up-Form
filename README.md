@@ -1,19 +1,36 @@
 # Sign-up-Form
 
-This is a mock-sign up form without a backend. Form fields are validated using javascript. 
+## About
 
-This project is part of The Odin Project. 
+This project is a mock sign-up form without a backend. The sign-up form is validated using javascript and provides visual indicators on whether a form field is valid to the user.
 
-Live link to page: https://adastros.github.io/Sign-up-Form/
+Assumptions made while working on this project:
 
-Assumptions made while working on this form:
 - This form will only be used in the US
 - Users are english speaking
 
-Things I learned/ improved on:
-- how to validate inputs using javascript
-- how to style a form
-- how to implement good UX practices for forms such as adding visual indictors and 
-different types of inline validation
-- prototyping a page layout and it's features
-- pseudo coding functions and recognizing where code could be improved on
+The inspiration behind the theme of the webpage stemmed from
+<a href="https://imgur.com/">
+Imgur
+</a>
+and
+<a href="https://www.pixiv.net/en/">
+Pixiv.
+</a>
+
+## Project Stack
+
+ <img src="https://skillicons.dev/icons?i=javascript,html,css" />
+
+## Things I learned
+
+- How to validate a form using javascript
+- How to style a form
+- How to implement good UX practices for forms such as adding visual indictors and
+  different types of inline validation
+- Prototyping a page layout and it's features on a whiteboard
+- Pseudocoding functions and recognizing where code could be improved on (with the help of a whiteboard)
+
+## Live Link to Sign-up Page
+
+https://adastros.github.io/Sign-up-Form/
