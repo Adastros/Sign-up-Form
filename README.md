@@ -22,14 +22,14 @@ Pixiv.
 
  <img src="https://skillicons.dev/icons?i=javascript,html,css" />
 
-## Things I learned
+## What I learned or improved on:
 
 - How to validate a form using javascript
-- How to style a form
 - How to implement good UX practices for forms such as adding visual indictors and
   different types of inline validation
 - Prototyping a page layout and it's features on a whiteboard
 - Pseudocoding functions and recognizing where code could be improved on (with the help of a whiteboard)
+- How to style a form
 
 ## Live Link to Sign-up Page
 
